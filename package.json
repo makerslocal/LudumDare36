@@ -17,6 +17,8 @@
   },
   "homepage": "https://github.com/makerslocal/LudumDare36#readme",
   "dependencies": {
+    "graphlib": "^2.1.1",
+    "knuth-shuffle": "^1.0.1",
     "phaser": "^2.6.2"
   },
   "devDependencies": {
