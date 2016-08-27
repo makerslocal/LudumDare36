@@ -6,19 +6,13 @@ class Overworld {
     this.platforms = null
   }
   
-  configureGame() {
-    this.game.time.desiredFps = 30
-    
-    this.background = this.game.add.tileSprite(0, 0, 1024, 640, 'background')
-
-    this.cursors = this.game.input.keyboard.createCursorKeys()
-  }
-  
   preload() {
       // load images, sounds
   }
   create() {
-    this.configureGame()
+    this.game.stage.backgroundColor = "#5a3404";
+    this.game.time.desiredFps = 30
+    this.cursors = this.game.input.keyboard.createCursorKeys()
   }
   update() {
       // logical update
