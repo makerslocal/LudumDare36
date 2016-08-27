@@ -10,6 +10,7 @@ class Overworld {
 
     preload() {
         // load images, sounds
+        this.game.load.image('city', 'assets/sprites/city.png')
     }
     create() {
         this.game.stage.backgroundColor = "#5a3404"
@@ -23,8 +24,7 @@ class Overworld {
         for(var key in this.inputs.keys)
             this.inputs.keys[key].onUp.add(this.keyHandler, this)
         
-        this.game.input.mouse.onMouseUp = this.mouseHandler.bind(this)
-        this.game.input.touch.onTouchEnd = this.mouseHandler.bind(this)
+        this.map = new Map(this.game)
     }
     update() {
         // logical update
@@ -89,6 +89,9 @@ class Overworld {
     }
     getClickedCity() {
         throw new Error('Unimplemented')
+    }
+    setClickedCity() {
+        
     }
     hasPlayerClickedADifferentCity() { 
         throw new Error('Unimplemented')

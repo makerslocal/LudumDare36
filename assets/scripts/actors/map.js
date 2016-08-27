@@ -1,12 +1,13 @@
 class Map extends graphlib.Graph {
-    constructor () {
+    constructor (game) {
         super({ directed: false })
         for ( var i=0; i<Map.CITY_COUNT; i++ ) {
             name = Map.CITY_NAMES.pop();
-            this.setNode(name, new City(name, Math.random(), Math.random()));
+            this.setNode(name, new City(name, Math.random(), Math.random(), game));
         }
-        console.log("NODES GENERATED:");
-        console.log(this.nodes());
+    }
+    getCities() {
+        return this._nodes
     }
 }
 
