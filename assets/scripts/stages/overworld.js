@@ -62,14 +62,22 @@ class Overworld {
         this.inputs.current = e
     }
     hasPlayerGivenValidInput() {
-        if(typeof this.inputs.current !== 'undefined' 
-           && this.inputs.current !== null)
-            if(this.inputs.current instanceof MouseEvent) 
-                return this.isClickingCity()
-            else if(this.inputs.current instanceof KeyboardEvent)
-                return this.isKeyTowardsCity()
-            
-        return false
+        try {
+            if(typeof this.inputs.current !== 'undefined' 
+               && this.inputs.current !== null)
+                if(this.inputs.current instanceof MouseEvent) 
+                    return this.isClickingCity()
+                else if(this.inputs.current instanceof KeyboardEvent)
+                    return this.isKeyTowardsCity()
+        }
+        catch(e) {
+            if(this.inputs.current !== null)
+                console.log(e)
+            this.inputs.current = null
+        }
+        finally {
+            return false
+        }
     }
     isClickingCity() {
         throw new Error('Unimplemented')
