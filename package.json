@@ -15,5 +15,8 @@
   "bugs": {
     "url": "https://github.com/makerslocal/LudumDare36/issues"
   },
-  "homepage": "https://github.com/makerslocal/LudumDare36#readme"
+  "homepage": "https://github.com/makerslocal/LudumDare36#readme",
+  "dependencies": {
+    "phaser": "^2.6.2"
+  }
 }
