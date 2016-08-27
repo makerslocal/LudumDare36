@@ -3,16 +3,18 @@ class Overworld {
         this.game = game
         this.player = null
         this.cursor = null
-        this.map = []
+        this.map = null
         this.inputs = {}
+        this.inputs.current = null
     }
 
     preload() {
         // load images, sounds
     }
     create() {
-        this.game.stage.backgroundColor = "#5a3404";
+        this.game.stage.backgroundColor = "#5a3404"
         this.game.time.desiredFps = 30
+        this.game.world.setBounds(0, 0, 1920, 1080)
         this.game.camera.follow(this.cursor)
         
         this.game.input.keyboard.addKeyCapture([37, 38, 39, 40, 32]) // prevent arrow keys, spacebar from scrolling
