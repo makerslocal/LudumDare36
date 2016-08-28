@@ -1,8 +1,11 @@
 class City extends Phaser.Sprite {
     constructor(name,x,y,game) {
         
-        super(game, Math.floor(x * game.world.width), Math.floor(y * game.world.height), 'city')
-        this.game.add.existing(this)
+        super(game, 
+              Math.floor(x * (game.world.width - game.camera.width) + game.camera.width / 2), 
+              Math.floor(y * (game.world.height - game.camera.height) + game.camera.height / 2), 
+              'city');
+        this.game.add.existing(this);
         
         this.name = name;
         

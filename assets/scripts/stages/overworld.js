@@ -15,8 +15,11 @@ class Overworld {
     create() {
         this.game.stage.backgroundColor = "#5a3404"
         this.game.time.desiredFps = 30
-        this.game.world.setBounds(0, 0, 1920, 1080)
-        this.game.camera.follow(this.cursor)
+        this.game.world.setBounds(0, 0, 2 * this.game.camera.width, 2* this.game.camera.height)
+        this.game.camera.setPosition(
+            this.game.world.centerX - this.game.camera.width / 2, 
+            this.game.world.centerY - this.game.camera.height / 2
+        )
         
         this.game.input.keyboard.addKeyCapture([37, 38, 39, 40, 32]) // prevent arrow keys, spacebar from scrolling
         this.inputs.keys = this.game.input.keyboard.createCursorKeys()
@@ -64,9 +67,6 @@ class Overworld {
         try {
             if(typeof this.current !== 'undefined' 
                && this.current !== null) {
-                
-                console.log('trying')
-                
                 if(this.current instanceof Phaser.Sprite && this.current.key === 'city') 
                     // TODO: check for city adjacency
                     return true 
@@ -94,7 +94,6 @@ class Overworld {
         throw new Error('Unimplemented')
     }
     hasPlayerClickedADifferentCity() { 
-        console.log('checking if different city')
         if(this.cursor === null) return true
         return this.cursor.city !== this.getClickedCity()
     }
