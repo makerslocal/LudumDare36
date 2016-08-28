@@ -64,4 +64,8 @@ for ( var i=0; i<cityCount; i++ ) {
 console.log("NODES GENERATED:");
 console.log(worldmap.nodes());
 
+cityNames = worldmap.nodes();
+for ( var idx in cityNames ) {
+	console.log(worldmap.node(cityNames[idx]));
+}
 
