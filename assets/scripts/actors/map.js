@@ -48,11 +48,11 @@ class Map extends graphlib.Graph {
 		return closest;
 	}
 	getConnectedCities(target) {
-		var nei = this.neighbors(target.name);
-		nei.map(function(val,idx,arr) {
+		var neigh = this.neighbors(target.name);
+		neigh.map(function(val,idx,arr) {
 			arr[idx] = this.node(val);
 		},this);
-		return nei;
+		return neigh;
 	}
 	generateCityFullMesh() {
 		var cities = this.getCities();
