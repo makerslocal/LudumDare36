@@ -73,7 +73,7 @@ class Overworld {
         var rs = []
         for(var r in roads) {
             var road = new Road(this.game, roads[r].v, roads[r].w)
-            if(road.isConnectedTo(this.player.city)) rs.push(road)
+            rs.push(road)
         }
             
         this.graphics.clear()
@@ -83,6 +83,8 @@ class Overworld {
             this.graphics.lineStyle(3, 0x4bd49c, 1)
             this.graphics.moveTo(road.co.x + 32, road.co.y + 24)
             this.graphics.lineTo(road.cf.x + 32, road.cf.y + 24)
+            
+            road.text = this.game.add.text(road.line.midPoint().x, road.line.midPoint().y, road.length + ' wk', { font: 'Inconsolata, monospace', fill: '#4bd49c', stroke: '#4bd49c', fontSize: '22px' })
         }
         this.graphics.endFill()
         
