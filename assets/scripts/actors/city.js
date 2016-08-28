@@ -12,7 +12,7 @@ class City extends Phaser.Sprite {
         this.inputEnabled = true;
         this.input.useHandCursor = true;
         this.events.onInputUp.add(function (e) {
-            this.game.state.states.overworld.clickedCity = this;
+            if(this instanceof City) this.game.state.states.overworld.clickedCity = this;
             this.game.state.states.overworld.current = this;
         }, this);
         

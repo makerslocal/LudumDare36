@@ -48,7 +48,6 @@ class Overworld {
         this.graphics = this.game.add.graphics(0, 0)
         this.roads = this.createRoads(this.map.getRoads())
         
-        
         this.statsMenu = new StatsMenu(this.game, this.player)
     }
     update() {
@@ -60,18 +59,35 @@ class Overworld {
         // clicked city -- city that has been most recently clicked OR keyed to
         // clicked city is always the "newest", if it exists
         
-        if(this.hasPlayerGivenValidInput()) {
+        if(this.hasPlayerGivenValidInput() && this.getClickedCity() !== null) {
             if(this.hasPlayerClickedADifferentCity())
                 this.moveCursorToClickedCity()
             else if(this.hasPlayerClickedSelectedCity())
                 if(this.isPlayerInSelectedCity()) {}
                 else 
                     this.movePlayerToClickedCity()
-            else if(this.hasPlayerClickedUpgradeButton())
-                this.game.state.start('upgrade')
-        
-        
-            this.current = null
+            else if(this.isPlayerInClickedCity()) {
+                if(typeof this.selectedRoad !== 'undefined' && this.selectedRoad !== null) {
+                    this.graphics.beginFill()
+                    this.graphics.lineStyle(3, 0x4bd49c, 1)
+                    this.graphics.moveTo(this.selectedRoad.co.x + 32, this.selectedRoad.co.y + 24)
+                    this.graphics.lineTo(this.selectedRoad.cf.x + 32, this.selectedRoad.cf.y + 24)
+                    this.graphics.endFill()
+                }
+                this.selectedRoad = null
+                if(this.cursor !== null) this.cursor.tint = 0xffffff
+                this.cursor = this.player.city
+                this.game.add.tween(this.game.camera).to(
+                    { 
+                        x: this.cursor.x - (this.game.camera.width / 2), 
+                        y: this.cursor.y - (this.game.camera.height / 2), 
+                    },
+                    300, 
+                    Phaser.Easing.Quadratic.InOut, 
+                    true
+                )
+            }
+            this.clickedCity = null
         }
         
         // thanks to @sanojian from http://www.html5gamedevs.com/topic/9814-move-camera-by-dragging-the-world-floor/
@@ -153,8 +169,7 @@ class Overworld {
     isClickingCity() {
         throw new Error('Unimplemented')
     }
-    isKeyTowardsCity() {
-        
+    isKeyTowardsCity() {   
         for(var c in this.adjacentCities) {
             var city = this.adjacentCities[c]
             
@@ -168,14 +183,12 @@ class Overworld {
     getClickedCity() {
         return this.clickedCity
     }
-    setClickedCity() {
-        throw new Error('Unimplemented')
-    }
     hasPlayerClickedADifferentCity() { 
         if(this.cursor === null) return true
-        return this.cursor.city !== this.getClickedCity()
+        return this.cursor.name !== this.getClickedCity().name && this.player.city.name !== this.getClickedCity().name
     }
     moveCursorToClickedCity() {
+        console.log('move cursor to clicked city')
         if(this.cursor !== null) this.cursor.tint = 0xffffff
         this.cursor = this.getClickedCity()
         this.game.add.tween(this.game.camera).to(
@@ -189,11 +202,42 @@ class Overworld {
         )
         this.cursor.tint = 0x000000
         this.adjacentCities = this.map.getConnectedCities(this.cursor)
+        if(this.adjacentCities.indexOf(this.player.city) !== -1) {
+            
+            if(typeof this.selectedRoad !== 'undefined' && this.selectedRoad !== null) {
+                this.graphics.beginFill()
+                this.graphics.lineStyle(3, 0x4bd49c, 1)
+                this.graphics.moveTo(this.selectedRoad.co.x + 32, this.selectedRoad.co.y + 24)
+                this.graphics.lineTo(this.selectedRoad.cf.x + 32, this.selectedRoad.cf.y + 24)
+                this.graphics.endFill()
+            }
+            
+            for(var r in this.roads)
+                if(this.roads[r].isConnectedTo(this.cursor) && this.roads[r].isConnectedTo(this.player.city))
+                    this.selectedRoad = this.roads[r]
+            
+            if(typeof this.selectedRoad !== 'undefined') {
+                this.graphics.beginFill()
+                this.graphics.lineStyle(3, 0x000000, 1)
+                this.graphics.moveTo(this.selectedRoad.co.x + 32, this.selectedRoad.co.y + 24)
+                this.graphics.lineTo(this.selectedRoad.cf.x + 32, this.selectedRoad.cf.y + 24)
+                this.graphics.endFill()
+            }
+        }
+            
     }
+    
     hasPlayerClickedSelectedCity() {
-        throw new Error('Unimplemented')
+        return this.getClickedCity().name === this.cursor.name
     }
     isPlayerInSelectedCity() {
-        return this.player.city === this.cursor.city
+        return this.player.city.name === this.cursor.name
+    }
+    isPlayerInClickedCity() {
+        if(this.getClickedCity() === null) return false
+        return this.player.city.name === this.getClickedCity().name
+    }
+    movePlayerToClickedCity() {
+        throw new Error('Unimplemented')
     }
 }
