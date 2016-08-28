@@ -28,12 +28,16 @@ class Map extends graphlib.Graph {
     getCities() {
         return this._nodes;
     }
-    getClosestCity(target, orphanOnly = false) {
+    getClosestCity(target, orphanOnly) {
+		if ( typeof orphanOnly === undefined ) {
+			orphanOnly = false;
+		}
+
 		var cities = this.getCities();
 		var closest = cities[0];
         for ( var idx in cities ) {
 			if ( getCityDistance(target,cities[idx]) < getCityDistance(target,closest) ) {
-				if ( orphanOnly == false || this.nodeEdges(target.name) ) { //if we don't care whether it's an orphan, or if it is an orphan
+				if ( orphanOnly === false || this.nodeEdges(target.name) ) { //if we don't care whether it's an orphan, or if it is an orphan
 					closest = cities[idx];
 				}
 			}
