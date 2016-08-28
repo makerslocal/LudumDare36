@@ -16,8 +16,6 @@ class City extends Phaser.Sprite {
             this.game.state.states.overworld.current = this;
         }, this);
         
-        this.nameText = this.game.add.text(this.x + (this.width / 2) - (11 * this.name.length) / 2, this.y + 35, this.name, { font: 'Inconsolata, monospace', fill: '#89bbaa', stroke: '#89bbaa', fontSize: '22px' })
-        
-        
+        this.nameText = this.game.add.text(this.x + (this.width / 2) - (11 * this.name.length) / 2, this.y + 35, this.name, { font: 'Inconsolata, monospace', fill: '#4bd49c', stroke: '#4bd49c', fontSize: '22px' })
     }
 }
