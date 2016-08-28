@@ -5,11 +5,29 @@ class Map extends graphlib.Graph {
 	
 		this.rootNode = null;
 
+		console.log("Threshold: " + 0.25*game.world.width);
+
 		var prevNode = null;
 	    for ( var i=0; i<Map.CITY_COUNT; i++ ) {
 
 			name = Map.CITY_NAMES.pop();
-		    var newNode = new City(name, Math.random(), Math.random(), game);
+
+			var newNode, closestNode, newx, newy;
+			var bailout = 0; //hail-mary in case we would otherwise infinitely loop
+		    do {
+				bailout++;
+				console.log("new node at " + i);
+				newx = Math.random();
+				newy = Math.random();
+				newNode = new FakeCity(name, newx, newy, game);
+				closestNode = this.getClosestCity(newNode);
+			} while ( this.rootNode != null && this.getCityDistance(newNode, closestNode) < 0.25*game.world.width && bailout < 20 );
+			newNode = new City(name,newx,newy,game); //make a real node
+			
+			if ( this.rootNode != null ) {
+				console.log("Decided on distance " + this.getCityDistance(newNode, closestNode));
+			}
+
             this.setNode(name, newNode);
 		    if ( this.rootNode == null ) {
 			    //must be the first node we've ever created
@@ -32,7 +50,11 @@ class Map extends graphlib.Graph {
 
     }
     getCities() {
-        return this._nodes;
+        var nodes = this.nodes();
+		nodes.map(function(val,idx,arr) {
+			arr[idx] = this.node(val);
+		},this);
+		return nodes;
     }
     getClosestCity(target, orphanOnly) {
 		if ( typeof orphanOnly === undefined ) {
@@ -42,7 +64,7 @@ class Map extends graphlib.Graph {
 		var cities = this.getCities();
 		var closest = cities[0];
         for ( var idx in cities ) {
-			if ( getCityDistance(target,cities[idx]) < getCityDistance(target,closest) ) {
+			if ( this.getCityDistance(target,cities[idx]) < this.getCityDistance(target,closest) ) {
 				if ( orphanOnly === false || this.nodeEdges(target.name) ) { //if we don't care whether it's an orphan, or if it is an orphan
 					closest = cities[idx];
 				}
