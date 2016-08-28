@@ -11,7 +11,6 @@ class Map extends graphlib.Graph {
 	    for ( var i=0; i<Map.CITY_COUNT; i++ ) {
 
 			name = Map.CITY_NAMES.pop();
-			console.log(name);
 
 			var newNode, closestNode, newx, newy;
 			var bailout = 0; //hail-mary in case we would otherwise infinitely loop
@@ -26,8 +25,7 @@ class Map extends graphlib.Graph {
 			newNode = new City(name,newx,newy,game); //make a real node
 			
 			if ( this.rootNode != null ) {
-				console.log("Decided on distance " + this.getCityDistance(newNode, closestNode));
-				console.log("From closest node " + closestNode.name);
+				console.log("Decided on distance " + this.getCityDistance(newNode, closestNode) + " From closest node " + closestNode.name);
 			}
 
             this.setNode(name, newNode);
@@ -46,13 +44,6 @@ class Map extends graphlib.Graph {
 		console.log("EDGES (shrunk): " + this.edges().length);
 		this.fixOrphans();
 		console.log("EDGES (fixed): " + this.edges().length);
-		console.log(this.edges());
-
-		//console.log("Connected cities for " + this.rootNode.name + ":");
-		//console.log(this.getConnectedCities(this.rootNode));
-		
-		console.log("All roads");
-		console.log(this.getRoads());
 
     }
     getCities() {
@@ -95,7 +86,6 @@ class Map extends graphlib.Graph {
 			for ( var idx2 in cities ) {
 				if ( idx != idx2 && !this.hasEdge(cities[idx].name,cities[idx2].name) ) {
 					this.setEdge(cities[idx].name, cities[idx2].name, cities[idx].name + " - " + cities[idx2].name);
-					//console.log(this.edge(cities[idx].name,cities[idx2].name));
 				}
 			}
 		}
@@ -109,7 +99,6 @@ class Map extends graphlib.Graph {
 				var v2 = edges[idx2].v;
 				var w2 = edges[idx2].w;
 				if ( idx != idx2 && this.hasEdge(v1,w1) && this.hasEdge(v2,w2) && this.doCityPathsIntersect(this.node(v1), this.node(w1), this.node(v2), this.node(w2)) ) {
-					//console.log("Remove conflicting edge " + v2 + "," + w2);
 					this.removeEdge(v2,w2);
 				}
 			}
@@ -126,7 +115,6 @@ class Map extends graphlib.Graph {
 	fixOrphans() {
 		var nodes = this.nodes();
 		for ( var idx in nodes ) {
-			console.log(this.getConnectedCities(this.node(nodes[idx])));
 			if ( this.getConnectedCities(this.node(nodes[idx])).length == 0 ) {
 				console.log("Fixing " + nodes[idx] + " with " + this.getClosestCity(this.node(nodes[idx])).name);
 				this.setEdge(nodes[idx], this.getClosestCity(this.node(nodes[idx])).name);
@@ -141,7 +129,6 @@ class Map extends graphlib.Graph {
 		if ( A==C || A==D || B==C || B==D ) {
 			return false;
 		}
-		//console.log("Check " + A.name + "," + B.name + " vs " + C.name + "," + D.name);
 		return (this.ccw(A,C,D) != this.ccw(B,C,D)) && (this.ccw(A,B,C) != this.ccw(A,B,D));
 	}
 
