@@ -39,10 +39,14 @@ class Map extends graphlib.Graph {
         }
 
 		this.generateCityFullMesh();
-		//console.log("EDGES: " + this.edges().length);
+		console.log("EDGES (initial): " + this.edges().length);
 		this.removeIntersectingPaths();
-		//console.log("EDGES: " + this.edges().length);
-		//console.log(this.edges());
+		console.log("EDGES (pruned): " + this.edges().length);
+		this.removePathsLongerThan(500);
+		console.log("EDGES (shrunk): " + this.edges().length);
+		this.fixOrphans();
+		console.log("EDGES (fixed): " + this.edges().length);
+		console.log(this.edges());
 
 		//console.log("Connected cities for " + this.rootNode.name + ":");
 		//console.log(this.getConnectedCities(this.rootNode));
@@ -62,7 +66,7 @@ class Map extends graphlib.Graph {
 		var cities = this.getCities();
 		var closest = cities[0];
         for ( var idx in cities ) {
-			if ( this.getCityDistance(target,cities[idx]) < this.getCityDistance(target,closest) ) {
+			if ( cities[idx] != target && this.getCityDistance(target,cities[idx]) < this.getCityDistance(target,closest) ) {
 				closest = cities[idx];
 			}
 		}
@@ -110,7 +114,25 @@ class Map extends graphlib.Graph {
 				}
 			}
 		}
-	}	
+	}
+	removePathsLongerThan(dist) {
+		var edges = this.edges();
+		for ( var idx in edges ) {
+			if ( this.getCityDistance(this.node(edges[idx].v), this.node(edges[idx].w)) > dist ) {
+				this.removeEdge(edges[idx].v,edges[idx].w);
+			}
+		}
+	}
+	fixOrphans() {
+		var nodes = this.nodes();
+		for ( var idx in nodes ) {
+			console.log(this.getConnectedCities(this.node(nodes[idx])));
+			if ( this.getConnectedCities(this.node(nodes[idx])).length == 0 ) {
+				console.log("Fixing " + nodes[idx] + " with " + this.getClosestCity(this.node(nodes[idx])).name);
+				this.setEdge(nodes[idx], this.getClosestCity(this.node(nodes[idx])).name);
+			}
+		}
+	}
 
 	ccw(A,B,C) {
 		return ((C.y-A.y) * (B.x-A.x)) > ((B.y-A.y) * (C.x-A.x));
