@@ -201,16 +201,15 @@ class Overworld {
             true
         )
         this.cursor.tint = 0x000000
-        this.adjacentCities = this.map.getConnectedCities(this.cursor)
+        this.adjacentCities = this.map.getConnectedCities(this.cursor) 
+        if(typeof this.selectedRoad !== 'undefined' && this.selectedRoad !== null) {
+            this.graphics.beginFill()
+            this.graphics.lineStyle(3, 0x4bd49c, 1)
+            this.graphics.moveTo(this.selectedRoad.co.x + 32, this.selectedRoad.co.y + 24)
+            this.graphics.lineTo(this.selectedRoad.cf.x + 32, this.selectedRoad.cf.y + 24)
+            this.graphics.endFill()
+        }
         if(this.adjacentCities.indexOf(this.player.city) !== -1) {
-            
-            if(typeof this.selectedRoad !== 'undefined' && this.selectedRoad !== null) {
-                this.graphics.beginFill()
-                this.graphics.lineStyle(3, 0x4bd49c, 1)
-                this.graphics.moveTo(this.selectedRoad.co.x + 32, this.selectedRoad.co.y + 24)
-                this.graphics.lineTo(this.selectedRoad.cf.x + 32, this.selectedRoad.cf.y + 24)
-                this.graphics.endFill()
-            }
             
             for(var r in this.roads)
                 if(this.roads[r].isConnectedTo(this.cursor) && this.roads[r].isConnectedTo(this.player.city))
@@ -239,5 +238,6 @@ class Overworld {
     }
     movePlayerToClickedCity() {
         throw new Error('Unimplemented')
+        this.game.state.start('travel', false, false, this.player, this.selectedRoad.treachery)
     }
 }
