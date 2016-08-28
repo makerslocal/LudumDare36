@@ -6,14 +6,17 @@ class Overworld {
         this.map = null
         this.inputs = {}
         this.current = null
+        this.statsMenu = null
     }
 
     preload() {
         // load images, sounds
         this.game.load.image('city', 'assets/sprites/city.png')
+        this.game.load.image('stats-menu', 'assets/sprites/stats-menu.png')
+        this.game.load.image('button', 'assets/sprites/stats-menu-button.png')
     }
     create() {
-        this.game.stage.backgroundColor = "#5a3404"
+        this.game.stage.backgroundColor = '#5a3404'
         this.game.time.desiredFps = 30
         this.game.world.setBounds(0, 0, 2 * this.game.camera.width, 2* this.game.camera.height)
         this.game.camera.setPosition(
@@ -27,7 +30,9 @@ class Overworld {
         for(var key in this.inputs.keys)
             this.inputs.keys[key].onUp.add(this.keyHandler, this)
         
+        this.player = new Player()
         this.map = new Map(this.game)
+        this.statsMenu = new StatsMenu(this.game, this.player)
     }
     update() {
         // logical update
@@ -39,7 +44,6 @@ class Overworld {
         // clicked city is always the "newest", if it exists
         
         if(this.hasPlayerGivenValidInput()) {
-            console.log('valid input')
             if(this.hasPlayerClickedADifferentCity())
                 this.moveCursorToClickedCity()
             else if(this.hasPlayerClickedSelectedCity())
@@ -54,13 +58,12 @@ class Overworld {
         }
     }
     render() {
-        this.game.debug.cameraInfo(this.game.camera, 32, 32)
+        
     }
     
     
     
     keyHandler(e) {
-        console.log(e)
         this.current = e
     }
     hasPlayerGivenValidInput() {
