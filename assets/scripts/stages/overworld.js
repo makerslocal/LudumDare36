@@ -5,7 +5,7 @@ class Overworld {
         this.cursor = null
         this.map = null
         this.inputs = {}
-        this.inputs.current = null
+        this.current = null
     }
 
     preload() {
@@ -25,6 +25,10 @@ class Overworld {
             this.inputs.keys[key].onUp.add(this.keyHandler, this)
         
         this.map = new Map(this.game)
+        this.cities = this.map.getCities()
+        var startingCity = this.cities[Math.floor(Math.random() * this.cities.length)]
+        this.cursor = new City(startingCity.name, startingCity.x, startingCity.y, this.game)
+        this.cursor.tint = 0xaf6565
     }
     update() {
         // logical update
@@ -36,7 +40,8 @@ class Overworld {
         // clicked city is always the "newest", if it exists
         
         if(this.hasPlayerGivenValidInput()) {
-            if(this.hasPlayerClickedADifferentCity()) 
+            console.log('valid input')
+            if(this.hasPlayerClickedADifferentCity())
                 this.moveCursorToClickedCity()
             else if(this.hasPlayerClickedSelectedCity())
                 if(this.isPlayerInSelectedCity()) {}
@@ -46,7 +51,7 @@ class Overworld {
                 this.game.state.start('upgrade')
         
         
-            this.inputs.current = null
+            this.current = null
         }
     }
     render() {
@@ -57,29 +62,28 @@ class Overworld {
     
     keyHandler(e) {
         console.log(e)
-        this.inputs.current = e
-    }
-    mouseHandler(e) {
-        console.log(e)
-        this.inputs.current = e
+        this.current = e
     }
     hasPlayerGivenValidInput() {
         try {
-            if(typeof this.inputs.current !== 'undefined' 
-               && this.inputs.current !== null)
-                if(this.inputs.current instanceof MouseEvent) 
-                    return this.isClickingCity()
-                else if(this.inputs.current instanceof KeyboardEvent)
+            if(typeof this.current !== 'undefined' 
+               && this.current !== null) {
+                
+                console.log('trying')
+                
+                if(this.current instanceof Phaser.Sprite && this.current.key === 'city') 
+                    // TODO: check for city adjacency
+                    return true 
+                else if(this.current instanceof Phaser.Key)
                     return this.isKeyTowardsCity()
+            }
         }
         catch(e) {
-            if(this.inputs.current !== null)
+            if(this.current !== null)
                 console.log(e)
-            this.inputs.current = null
+            this.current = null
         }
-        finally {
-            return false
-        }
+        return false
     }
     isClickingCity() {
         throw new Error('Unimplemented')
@@ -88,16 +92,19 @@ class Overworld {
         throw new Error('Unimplemented')
     }
     getClickedCity() {
-        throw new Error('Unimplemented')
+        return this.clickedCity
     }
     setClickedCity() {
-        
-    }
-    hasPlayerClickedADifferentCity() { 
         throw new Error('Unimplemented')
     }
+    hasPlayerClickedADifferentCity() { 
+        console.log('checking if different city')
+        return this.cursor.city !== this.getClickedCity()
+    }
     moveCursorToClickedCity() {
+        this.cursor.city.tint = 0xffffff
         this.cursor.city = this.getClickedCity()
+        this.cursor.city.tint = 0x884466
     }
     hasPlayerClickedSelectedCity() {
         throw new Error('Unimplemented')
