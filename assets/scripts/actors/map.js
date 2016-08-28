@@ -5,12 +5,13 @@ class Map extends graphlib.Graph {
 	
 		this.rootNode = null;
 
-		console.log("Threshold: " + 0.25*game.world.width);
+		console.log("Threshold: " + 0.10*game.world.width);
 
 		var prevNode = null;
 	    for ( var i=0; i<Map.CITY_COUNT; i++ ) {
 
 			name = Map.CITY_NAMES.pop();
+			console.log(name);
 
 			var newNode, closestNode, newx, newy;
 			var bailout = 0; //hail-mary in case we would otherwise infinitely loop
@@ -21,11 +22,12 @@ class Map extends graphlib.Graph {
 				newy = Math.random();
 				newNode = new FakeCity(name, newx, newy, game);
 				closestNode = this.getClosestCity(newNode);
-			} while ( this.rootNode != null && this.getCityDistance(newNode, closestNode) < 0.25*game.world.width && bailout < 20 );
+			} while ( this.rootNode != null && this.getCityDistance(newNode, closestNode) < 0.10*game.world.width && bailout < 20 );
 			newNode = new City(name,newx,newy,game); //make a real node
 			
 			if ( this.rootNode != null ) {
 				console.log("Decided on distance " + this.getCityDistance(newNode, closestNode));
+				console.log("From closest node " + closestNode.name);
 			}
 
             this.setNode(name, newNode);
@@ -57,17 +59,11 @@ class Map extends graphlib.Graph {
 		return nodes;
     }
     getClosestCity(target, orphanOnly) {
-		if ( typeof orphanOnly === undefined ) {
-			orphanOnly = false;
-		}
-
 		var cities = this.getCities();
 		var closest = cities[0];
         for ( var idx in cities ) {
 			if ( this.getCityDistance(target,cities[idx]) < this.getCityDistance(target,closest) ) {
-				if ( orphanOnly === false || this.nodeEdges(target.name) ) { //if we don't care whether it's an orphan, or if it is an orphan
-					closest = cities[idx];
-				}
+				closest = cities[idx];
 			}
 		}
 		return closest;
