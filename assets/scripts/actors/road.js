@@ -6,4 +6,8 @@ class Road {
         
         this.line = new Phaser.Line(co.x, co.y, cf.x, cf.y)
     }
+    
+    isConnectedTo(city) {
+        return this.co === city || this.cf === city
+    }
 }
