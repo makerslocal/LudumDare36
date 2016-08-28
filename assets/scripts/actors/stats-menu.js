@@ -17,6 +17,11 @@ class StatsMenu extends Phaser.Sprite {
         this.title = this.game.add.text(115, 90, 'Stats', { font: 'Inconsolata, monospace', fill: '#333333', stroke: '#333333', fontSize: '30px' })
         this.title.fixedToCamera = true
         
+        this.horse = this.game.add.sprite(60, 150, 'horse', 0)
+        this.horse.animations.add('running')
+        this.horse.animations.play('running', 30, true)
+        this.horse.fixedToCamera = true
+        
         this.health = this.game.add.group()
         
         this.health.text = this.game.add.text(60, 360, 'Health', { font: 'Inconsolata, monospace', fill: '#333333', stroke: '#333333', fontSize: '30px' })

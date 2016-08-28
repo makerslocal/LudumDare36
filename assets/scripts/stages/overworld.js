@@ -14,6 +14,7 @@ class Overworld {
         this.game.load.image('city', 'assets/sprites/city.png')
         this.game.load.image('stats-menu', 'assets/sprites/stats-menu.png')
         this.game.load.image('button', 'assets/sprites/stats-menu-button.png')
+        this.game.load.spritesheet('horse', 'assets/sprites/horse.png', 183, 134)
     }
     create() {
         this.game.stage.backgroundColor = '#5a3404'
@@ -35,7 +36,7 @@ class Overworld {
         
         this.roads = this.createRoads(this.map.getRoads())
         var graphics = this.game.add.graphics(0, 0)
-        graphics.beginFill('#4BD49C')
+        graphics.beginFill('#4bd49c')
         graphics.lineStyle(3, 0x4bd49c, 1)
         for(var r in this.roads) {
             var road = this.roads[r]
