@@ -19,13 +19,16 @@ class Map extends graphlib.Graph {
         }
 
 		this.generateCityFullMesh();
-		console.log("EDGES: " + this.edges().length);
+		//console.log("EDGES: " + this.edges().length);
 		this.removeIntersectingPaths();
-		console.log("EDGES: " + this.edges().length);
-		console.log(this.edges());
+		//console.log("EDGES: " + this.edges().length);
+		//console.log(this.edges());
 
-		console.log("Connected cities for " + this.rootNode.name + ":");
-		console.log(this.getConnectedCities(this.rootNode));
+		//console.log("Connected cities for " + this.rootNode.name + ":");
+		//console.log(this.getConnectedCities(this.rootNode));
+		
+		console.log("All roads");
+		console.log(this.getRoads());
 
     }
     getCities() {
@@ -54,13 +57,23 @@ class Map extends graphlib.Graph {
 		},this);
 		return neigh;
 	}
+	getRoads() {
+		var roads = this.edges();
+		roads.map(function(val,idx,arr) {
+			arr[idx] = {
+				v: this.node(val.v),
+				w: this.node(val.w)
+			};
+		},this);
+		return roads;
+	}
 	generateCityFullMesh() {
 		var cities = this.getCities();
 		for ( var idx in cities ) {
 			for ( var idx2 in cities ) {
 				if ( idx != idx2 && !this.hasEdge(cities[idx].name,cities[idx2].name) ) {
 					this.setEdge(cities[idx].name, cities[idx2].name, cities[idx].name + " - " + cities[idx2].name);
-					console.log(this.edge(cities[idx].name,cities[idx2].name));
+					//console.log(this.edge(cities[idx].name,cities[idx2].name));
 				}
 			}
 		}
@@ -74,7 +87,7 @@ class Map extends graphlib.Graph {
 				var v2 = edges[idx2].v;
 				var w2 = edges[idx2].w;
 				if ( idx != idx2 && this.hasEdge(v1,w1) && this.hasEdge(v2,w2) && this.doCityPathsIntersect(this.node(v1), this.node(w1), this.node(v2), this.node(w2)) ) {
-					console.log("Remove conflicting edge " + v2 + "," + w2);
+					//console.log("Remove conflicting edge " + v2 + "," + w2);
 					this.removeEdge(v2,w2);
 				}
 			}
@@ -88,7 +101,7 @@ class Map extends graphlib.Graph {
 		if ( A==C || A==D || B==C || B==D ) {
 			return false;
 		}
-		console.log("Check " + A.name + "," + B.name + " vs " + C.name + "," + D.name);
+		//console.log("Check " + A.name + "," + B.name + " vs " + C.name + "," + D.name);
 		return (this.ccw(A,C,D) != this.ccw(B,C,D)) && (this.ccw(A,B,C) != this.ccw(A,B,D));
 	}
 
