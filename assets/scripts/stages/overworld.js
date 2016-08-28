@@ -32,6 +32,19 @@ class Overworld {
         
         this.player = new Player()
         this.map = new Map(this.game)
+        
+        this.roads = this.createRoads(this.map.getRoads())
+        var graphics = this.game.add.graphics(0, 0)
+        graphics.beginFill('#4BD49C')
+        graphics.lineStyle(3, 0x4bd49c, 1)
+        for(var r in this.roads) {
+            var road = this.roads[r]
+            graphics.moveTo(road.co.x + 32, road.co.y + 24)
+            graphics.lineTo(road.cf.x + 32, road.cf.y + 24)
+        }
+        graphics.endFill()
+        
+        
         this.statsMenu = new StatsMenu(this.game, this.player)
     }
     update() {
@@ -62,7 +75,19 @@ class Overworld {
     }
     
     
-    
+    createRoads (roads) {
+        var rs = []
+        for(var r in roads)
+            rs.push(
+                new Road(
+                    this.game,
+                    roads[r].v,
+                    roads[r].w
+                )
+            )
+            
+        return rs
+    }
     keyHandler(e) {
         this.current = e
     }
