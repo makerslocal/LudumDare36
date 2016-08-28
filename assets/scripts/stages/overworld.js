@@ -67,6 +67,7 @@ class Overworld {
             this.current = null
         }
         
+        // thanks to @sanojian from http://www.html5gamedevs.com/topic/9814-move-camera-by-dragging-the-world-floor/
         if (this.game.input.activePointer.isDown) {	
             if (this.game.origDragPoint) {		
                 // move the camera by the amount the mouse has moved since last update		
