@@ -33,6 +33,9 @@ class Overworld {
         
         this.map = new Map(this.game)
         this.player = new Player(this.game, this.map.rootNode)
+        this.cursor = this.player.city
+        this.adjacentCities = this.map.getConnectedCities(this.cursor)
+        
         this.game.camera.setPosition(this.player.x - this.game.camera.width / 2, this.player.y - this.game.camera.height / 2)
         
         this.graphics = this.game.add.graphics(0, 0)
@@ -63,10 +66,24 @@ class Overworld {
         
             this.current = null
         }
+        
+        if (this.game.input.activePointer.isDown) {	
+            if (this.game.origDragPoint) {		
+                // move the camera by the amount the mouse has moved since last update		
+                this.game.camera.x += this.game.origDragPoint.x - this.game.input.activePointer.position.x;		
+                this.game.camera.y += this.game.origDragPoint.y - this.game.input.activePointer.position.y;	
+            }	
+            // set new drag origin to current position	
+            this.game.origDragPoint = this.game.input.activePointer.position.clone();
+        }
+        else {	
+            this.game.origDragPoint = null;
+        }
     }
     render() {
         
     }
+    
     
     
     createRoads (roads) {
@@ -115,6 +132,15 @@ class Overworld {
         throw new Error('Unimplemented')
     }
     isKeyTowardsCity() {
+        
+        for(var c in this.adjacentCities) {
+            var city = this.adjacentCities[c]
+            
+            switch(this.current.keyCode) {
+                default:
+                    console.log(this.current.keyCode)
+            }
+        }
         throw new Error('Unimplemented')
     }
     getClickedCity() {
@@ -140,6 +166,7 @@ class Overworld {
             true
         )
         this.cursor.tint = 0x000000
+        this.adjacentCities = this.map.getConnectedCities(this.cursor)
     }
     hasPlayerClickedSelectedCity() {
         throw new Error('Unimplemented')
