@@ -101,7 +101,15 @@ class Overworld {
     moveCursorToClickedCity() {
         if(this.cursor !== null) this.cursor.tint = 0xffffff
         this.cursor = this.getClickedCity()
-        this.game.camera.follow(this.cursor)
+        this.game.add.tween(this.game.camera).to(
+            { 
+                x: this.cursor.x - (this.game.camera.width / 2), 
+                y: this.cursor.y - (this.game.camera.height / 2), 
+            },
+            300, 
+            Phaser.Easing.Quadratic.InOut, 
+            true
+        )
         this.cursor.tint = 0x000000
     }
     hasPlayerClickedSelectedCity() {
