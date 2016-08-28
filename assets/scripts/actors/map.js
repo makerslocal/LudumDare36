@@ -24,6 +24,9 @@ class Map extends graphlib.Graph {
 		console.log("EDGES: " + this.edges().length);
 		console.log(this.edges());
 
+		console.log("Connected cities for " + this.rootNode.name + ":");
+		console.log(this.getConnectedCities(this.rootNode));
+
     }
     getCities() {
         return this._nodes;
@@ -43,6 +46,13 @@ class Map extends graphlib.Graph {
 			}
 		}
 		return closest;
+	}
+	getConnectedCities(target) {
+		var nei = this.neighbors(target.name);
+		nei.map(function(val,idx,arr) {
+			arr[idx] = this.node(val);
+		},this);
+		return nei;
 	}
 	generateCityFullMesh() {
 		var cities = this.getCities();
