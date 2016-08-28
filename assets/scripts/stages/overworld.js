@@ -25,10 +25,6 @@ class Overworld {
             this.inputs.keys[key].onUp.add(this.keyHandler, this)
         
         this.map = new Map(this.game)
-        this.cities = this.map.getCities()
-        var startingCity = this.cities[Math.floor(Math.random() * this.cities.length)]
-        this.cursor = new City(startingCity.name, startingCity.x, startingCity.y, this.game)
-        this.cursor.tint = 0xaf6565
     }
     update() {
         // logical update
@@ -99,12 +95,14 @@ class Overworld {
     }
     hasPlayerClickedADifferentCity() { 
         console.log('checking if different city')
+        if(this.cursor === null) return true
         return this.cursor.city !== this.getClickedCity()
     }
     moveCursorToClickedCity() {
-        this.cursor.city.tint = 0xffffff
-        this.cursor.city = this.getClickedCity()
-        this.cursor.city.tint = 0x884466
+        if(this.cursor !== null) this.cursor.tint = 0xffffff
+        this.cursor = this.getClickedCity()
+        this.game.camera.follow(this.cursor)
+        this.cursor.tint = 0x000000
     }
     hasPlayerClickedSelectedCity() {
         throw new Error('Unimplemented')
