@@ -36,6 +36,13 @@ class Overworld {
         this.cursor = this.player.city
         this.adjacentCities = this.map.getConnectedCities(this.cursor)
         
+        for(var c in this.adjacentCities){
+            this.player.city.alpha = 1
+            this.player.city.nameText.alpha = 1
+            this.adjacentCities[c].alpha = 1
+            this.adjacentCities[c].nameText.alpha = 1
+        }
+            
         this.game.camera.setPosition(this.player.x - this.game.camera.width / 2, this.player.y - this.game.camera.height / 2)
         
         this.graphics = this.game.add.graphics(0, 0)
@@ -98,11 +105,25 @@ class Overworld {
         this.graphics.beginFill('#4bd49c')
         for(var r in rs) {
             var road = rs[r]
-            this.graphics.lineStyle(3, 0x4bd49c, 1)
+            if(road.isConnectedTo(this.player.city))
+                this.graphics.lineStyle(3, 0x4bd49c, 1)
+            else this.graphics.lineStyle(3, 0x4bd49c, 0.1)
             this.graphics.moveTo(road.co.x + 32, road.co.y + 24)
             this.graphics.lineTo(road.cf.x + 32, road.cf.y + 24)
             
-            road.text = this.game.add.text(road.line.midPoint().x, road.line.midPoint().y, road.length + ' wk', { font: 'Inconsolata, monospace', fill: '#4bd49c', stroke: '#4bd49c', fontSize: '22px' })
+            if(road.isConnectedTo(this.player.city)) {
+                road.text = this.game.add.text(road.line.midPoint().x, road.line.midPoint().y, road.length + ' wk', { font: 'Inconsolata, monospace', fill: '#4bd49c', stroke: '#4bd49c', fontSize: '22px' })
+                
+                var treacheryRating = ''
+                
+                for(var i = 1; i <= 5; i++)
+                    if(i <= road.treachery)
+                        treacheryRating += '\u2605'
+                    else treacheryRating += '\u2606'
+                
+                road.treacheryText = this.game.add.text(road.line.midPoint().x - (treacheryRating.length * 11) / 2, road.line.midPoint().y + 30, treacheryRating, { font: 'monospace', fill: '#4bd49c', stroke: '#4bd49c', fontSize: '22px' })
+            }
+                
         }
         this.graphics.endFill()
         
