@@ -31,19 +31,12 @@ class Overworld {
         for(var key in this.inputs.keys)
             this.inputs.keys[key].onUp.add(this.keyHandler, this)
         
-        this.player = new Player()
         this.map = new Map(this.game)
+        this.player = new Player(this.game, this.map.rootNode)
+        this.game.camera.setPosition(this.player.x - this.game.camera.width / 2, this.player.y - this.game.camera.height / 2)
         
+        this.graphics = this.game.add.graphics(0, 0)
         this.roads = this.createRoads(this.map.getRoads())
-        var graphics = this.game.add.graphics(0, 0)
-        graphics.beginFill('#4bd49c')
-        graphics.lineStyle(3, 0x4bd49c, 1)
-        for(var r in this.roads) {
-            var road = this.roads[r]
-            graphics.moveTo(road.co.x + 32, road.co.y + 24)
-            graphics.lineTo(road.cf.x + 32, road.cf.y + 24)
-        }
-        graphics.endFill()
         
         
         this.statsMenu = new StatsMenu(this.game, this.player)
@@ -78,15 +71,21 @@ class Overworld {
     
     createRoads (roads) {
         var rs = []
-        for(var r in roads)
-            rs.push(
-                new Road(
-                    this.game,
-                    roads[r].v,
-                    roads[r].w
-                )
-            )
+        for(var r in roads) {
+            var road = new Road(this.game, roads[r].v, roads[r].w)
+            if(road.isConnectedTo(this.player.city)) rs.push(road)
+        }
             
+        this.graphics.clear()
+        this.graphics.beginFill('#4bd49c')
+        for(var r in rs) {
+            var road = rs[r]
+            this.graphics.lineStyle(3, 0x4bd49c, 1)
+            this.graphics.moveTo(road.co.x + 32, road.co.y + 24)
+            this.graphics.lineTo(road.cf.x + 32, road.cf.y + 24)
+        }
+        this.graphics.endFill()
+        
         return rs
     }
     keyHandler(e) {
