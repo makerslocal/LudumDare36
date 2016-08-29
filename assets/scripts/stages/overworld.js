@@ -325,7 +325,13 @@ class Overworld {
         
         this.game.input.keyboard.onUpCallback = function () {}
         this.game.input.mouse.mouseUpCallback = function () {}
-        this.player.city = this.getClickedCity()
+        this.player.city = this.getClickedCity();
+
+		//pick up packages
+		while ( this.player.city.packages.length > 0 && this.player.packages.length < this.player.stats.carryingCapacity ) {
+			this.player.packages.push(this.player.city.packages.pop());
+		}
+
         this.game.state.start('travel', true, false, this.player.dumps(), this.selectedRoad, this.map.dumps())
     }
 }
