@@ -4,9 +4,21 @@ class Travel {
     }
     
     init(player, road, map) {
-        this.player = player
+        
+		this.player = player
         this.events = this.generateEvents(road.treachery, road.length)
         this.map = map
+		
+		this.road = road;
+		console.log("cf=" + road.cf.name + ",co=" + road.co.name + ",player.cityName=" + player.cityName);
+		if ( road.cf.name == player.cityName ) {
+			this.comingFrom = road.co;
+			this.goingTo = road.cf;
+		} else {
+			this.comingFrom = road.cf;
+			this.goingTo = road.co;
+		}
+
     }
     
     preload () {
@@ -28,7 +40,13 @@ class Travel {
         this.info.scale.setTo(4, 4)
         this.info.smoothed = false
         
-        this.infoText = this.game.add.text(80, 480, 'You and your jockey leave town...', { font: 'Inconsolata, monospace', fill: '#5a3404', stroke: '#333333', fontSize: '30px', wordWrap: true, wordWrapWidth: 800 })
+		console.log(this.road);
+        this.infoText = this.game.add.text(
+				80, 
+				480, 
+				'You and your jockey leave ' + this.comingFrom.name + '...', 
+				{ font: 'Inconsolata, monospace', fill: '#5a3404', stroke: '#333333', fontSize: '30px', wordWrap: true, wordWrapWidth: 800 }
+		);
         
         this.horse = this.game.add.sprite(120, 160, 'horse', 0)
         this.horse.animations.add('running')
@@ -90,7 +108,7 @@ class Travel {
                     console.log(this.player)
                 }
                 else if(this.intervalIndex - 1 === this.events.length)
-                    this.infoText.text = '...and the lonely road gives way to town.'
+                    this.infoText.text = '...and the lonely road gives way to ' + this.goingTo.name  + '.'
 
                 this.horse.animations.stop()
             }
