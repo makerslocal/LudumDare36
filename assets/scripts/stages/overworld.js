@@ -8,16 +8,6 @@ class Overworld {
         this.current = null
         this.statsMenu = null
     }
-    
-    init(map) {
-        if(typeof map !== 'undefined' && map instanceof Map) {
-            this.map = map
-            var cities = this.map.getCities()
-            console.log(cities)
-            for(var c in cities)
-                this.game.add.existing(cities[c])
-        }
-    }
 
     preload() {
         // load images, sounds
@@ -41,9 +31,8 @@ class Overworld {
         for(var key in this.inputs.keys)
             this.inputs.keys[key].onUp.add(this.keyHandler, this)
         
-        if(typeof this.map === 'undefined' || this.map === null)
-            this.map = new Map(this.game)
-            
+        this.map = new Map(this.game)
+        this.game.map = this.map
         this.player = new Player(this.game, this.map.rootNode)
         this.cursor = this.player.city
         this.adjacentCities = this.map.getConnectedCities(this.cursor)
@@ -81,7 +70,7 @@ class Overworld {
             else if(this.isPlayerInClickedCity()) {
                 if(typeof this.selectedRoad !== 'undefined' && this.selectedRoad !== null) {
                     this.graphics.beginFill()
-                    this.graphics.lineStyle(3, 0x4bd49c, 1)
+                    this.graphics.lineStyle(3, 0x82653C, 1)
                     this.graphics.moveTo(this.selectedRoad.co.x + 32, this.selectedRoad.co.y + 24)
                     this.graphics.lineTo(this.selectedRoad.cf.x + 32, this.selectedRoad.cf.y + 24)
                     this.graphics.endFill()
