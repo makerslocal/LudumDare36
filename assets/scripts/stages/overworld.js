@@ -85,7 +85,6 @@ class Overworld {
 				this.player = new Player(this.game, this.map.rootNode);
 			}
 		}
-        
 
         this.cursor = this.player.city
         this.adjacentCities = this.map.getConnectedCities(this.cursor)
@@ -211,10 +210,8 @@ class Overworld {
 						{ font: 'Amatic SC, serif', fill: '#615C45', stroke: '#615C45', fontSize: '18px', fontWeight: 'bold' }
 					);
 				var angle = this.map.getCityAngle(road.co, road.cf);
-				console.log(angle);
 				if ( angle > Math.PI*0.5 && angle < Math.PI*1.5 ) {
 					angle -= Math.PI;
-					console.log("!" + angle);
 				}
 				//road.text.rotation = angle;
 
@@ -268,7 +265,6 @@ class Overworld {
         return this.cursor.name !== this.getClickedCity().name && this.player.city.name !== this.getClickedCity().name
     }
     moveCursorToClickedCity() {
-        console.log('move cursor to clicked city')
         if(this.cursor !== null) this.cursor.tint = 0xffffff
         this.cursor = this.getClickedCity()
         this.game.add.tween(this.game.camera).to(
@@ -281,7 +277,6 @@ class Overworld {
             true
         )
         this.cursor.tint = 0x000000
-        this.adjacentCities = this.map.getConnectedCities(this.cursor) 
         if(typeof this.selectedRoad !== 'undefined' && this.selectedRoad !== null) {
             this.graphics.beginFill()
             this.graphics.lineStyle(3, 0x82653C, 1)
@@ -289,7 +284,8 @@ class Overworld {
             this.graphics.lineTo(this.selectedRoad.cf.x + 32, this.selectedRoad.cf.y + 24)
             this.graphics.endFill()
         }
-        if(this.adjacentCities.indexOf(this.player.city) !== -1) {
+        
+        if(this.adjacentCities.indexOf(this.cursor) !== -1) {
             
             for(var r in this.roads)
                 if(this.roads[r].isConnectedTo(this.cursor) && this.roads[r].isConnectedTo(this.player.city))
@@ -317,6 +313,10 @@ class Overworld {
         return this.player.city.name === this.getClickedCity().name
     }
     movePlayerToClickedCity() {
+        
+        if(this.adjacentCities.indexOf(this.getClickedCity()) === -1)
+           return
+        
         this.game.input.keyboard.onUpCallback = function () {}
         this.game.input.mouse.mouseUpCallback = function () {}
         this.player.city = this.getClickedCity()
