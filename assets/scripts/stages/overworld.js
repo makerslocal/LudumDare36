@@ -25,6 +25,16 @@ class Overworld {
         this.game.load.image('button', 'assets/sprites/stats-menu-button.png')
         this.game.load.spritesheet('horse', 'assets/sprites/horse.png', 183, 134)
     }
+	storageAvailable() {
+		try {
+			var storage = window[type], x = '__storage_test__';
+			storage.setItem(x, x);
+			storage.removeItem(x);
+			return true;
+		} catch(e) {
+			return false;
+		}
+	}
     create() {
         this.game.stage.backgroundColor = '#D5B783'
         this.game.time.desiredFps = 30
@@ -40,10 +50,37 @@ class Overworld {
         for(var key in this.inputs.keys)
             this.inputs.keys[key].onUp.add(this.keyHandler, this)
         
-        if(this.map === null)
-            this.map = new Map(this.game)
+        if(this.map === null) {
+			var loadedMap = false;
+			var savedMap = null;
+			if ( this.storageAvailable() ) {
+				savedMap = localStorage.getItem('pex_map');
+				if ( savedMap != null ) {
+					loadedMap = true;
+				}
+			}
+
+			if ( loadedMap ) {
+				this.map = new Map(this.game, savedMap);
+			} else {
+				this.map = new Map(this.game);
+			}
+		}
             
-        this.player = new Player(this.game, this.map.rootNode)
+        var loadedPlayer = false;
+		var savedPlayer = null;
+		if ( this.storageAvailable() ) {
+			savedPlayer = localStorage.getItem('pex_player');
+			if ( savedPlayer != null ) {
+				loadedPlayer = true;
+			}
+		}
+		if ( loadedPlayer ) {
+			this.player = new Player(this.game, this.map.rootNode, savedPlayer);
+		} else {
+			this.player = new Player(this.game, this.map.rootNode);
+		}
+
         this.cursor = this.player.city
         this.adjacentCities = this.map.getConnectedCities(this.cursor)
         
