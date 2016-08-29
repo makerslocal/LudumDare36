@@ -47,8 +47,14 @@ class Overworld {
         
         if(typeof this.mapDump !== 'undefined' && this.mapDump !== null)
             this.map = new Map(this.game, this.mapDump)
-        if(typeof this.playerDump !== 'undefined' && this.playerDump !== null)
-            this.player = new Player(this.game, this.playerDump.city, this.playerDump)
+        if(typeof this.playerDump !== 'undefined' && this.playerDump !== null) {
+            var cities = this.map.getCities(),
+                playerCity = null
+            for(var c in cities)
+                if(cities[c].name === this.playerDump.city.name)
+                    playerCity = cities[c]
+            this.player = new Player(this.game, playerCity, this.playerDump)
+        }
             
         if(this.map === null) {
 			var loadedMap = false;
