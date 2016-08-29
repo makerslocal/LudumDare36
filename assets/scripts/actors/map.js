@@ -24,7 +24,7 @@ class Map extends graphlib.Graph {
 					newNode = new FakeCity(name, newx, newy, game);
 					closestNode = this.getClosestCity(newNode);
 				} while ( this.rootNode != null && this.getCityDistance(newNode, closestNode) < 0.10*game.world.width && bailout < 20 );
-				//newNode = new City(name,newx,newy,game); //make a real node
+				newNode = new City(name,newx,newy,game); //make a real node
 				
 				if ( this.rootNode != null ) {
 					console.log("Decided on distance " + this.getCityDistance(newNode, closestNode) + " From closest node " + closestNode.name);
