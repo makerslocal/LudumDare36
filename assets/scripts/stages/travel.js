@@ -136,7 +136,7 @@ class Travel {
         if(this.overlay.opacity >= 1) {
             this.game.input.keyboard.onUpCallback = function () {}
             this.game.input.mouse.mouseUpCallback = function () {}
-            this.game.state.start('overworld')
+            this.game.state.start('overworld', true, false, this.map)
         }
         else this.overlay.opacity += 0.1
         
