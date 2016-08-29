@@ -10,12 +10,8 @@ class Overworld {
     }
 
     init(map) {
-        if(typeof map !== 'undefined' && map instanceof Map) {
-            this.map = map
-            var cities = this.map.getCities()
-            for(var c in cities)
-                this.game.add.existing(cities[c])
-        }
+        if(typeof map !== 'undefined' && map !== null)
+            this.map = new Map(this.game, map)
         else this.map = null
     }
     preload() {
@@ -302,6 +298,6 @@ class Overworld {
     movePlayerToClickedCity() {
         this.game.input.keyboard.onUpCallback = function () {}
         this.game.input.mouse.mouseUpCallback = function () {}
-        this.game.state.start('travel', true, false, this.player, this.selectedRoad.treachery, this.map)
+        this.game.state.start('travel', true, false, this.player, this.selectedRoad.treachery, this.map.dumps())
     }
 }
