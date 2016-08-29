@@ -142,16 +142,16 @@ class Travel {
 
 		for ( var i=0; i<weeks; i++ ) {
 			//bandits
-			if ( Math.random() < 0.05 ) {
+			if ( Math.random() < 0.01*treachery ) {
 				res.push(new TravelEvent({
 					text: "\"Stick 'em up! This is a stick up!\"",
 					health: this.player.stats.health * -0.1,
-					money: this.player.money * -0.8
+					money: this.player.money * -0.81
 				}));
 			}
 
 			//snake bite
-			if ( Math.random() < 0.20 ) {
+			if ( Math.random() < 0.02*treachery ) {
 				res.push(new TravelEvent({
 					text: "You were bitten by a snake!",
 					health: this.player.stats.health * -0.1
@@ -159,7 +159,7 @@ class Travel {
 			}
 
 			//trip
-			if ( Math.random() < 0.20 ) {
+			if ( Math.random() < 0.04*treachery ) {
 				res.push(new TravelEvent({
 					text: "You tripped due to your jockey's negligence.",
 					health: this.player.stats.health * -0.05
@@ -167,7 +167,7 @@ class Travel {
 			}
 
 			//drop money
-			if ( Math.random() < 0.10 ) {
+			if ( Math.random() < 0.02 ) {
 				res.push(new TravelEvent({
 					text: "Your jockey clumsily dropped some money on the ground.",
 					money: this.player.money * -0.05
@@ -175,7 +175,7 @@ class Travel {
 			}
 
 			//rock lobster
-			if ( Math.random() < 0.01 ) {
+			if ( Math.random() < 0.01*treachery ) {
 				res.push(new TravelEvent({
 					text: "You ran into a rock... but it wasn't a rock!",
 					health: this.player.stats.health * -0.02
