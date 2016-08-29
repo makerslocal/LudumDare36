@@ -22,7 +22,7 @@ class TravelEvent {
 			this.text += " You lose " + this.effects.money + " gold as a result.";
 		}
 		if ( this.effects.health != 0 ) {
-			this.text += " You are dealt " + health + " damage.";
+			this.text += " You are dealt " + this.effects.health + " damage.";
 		}
 	}
 }
