@@ -16,6 +16,7 @@ class Upgrade {
         this.game.load.image('upgrade-shoe', 'assets/sprites/upgrade-icon-shoe.png')
         this.game.load.image('exit-sign', 'assets/sprites/travel-info.png')
         this.game.load.spritesheet('horse', 'assets/sprites/horse.png', 183, 134)
+        this.game.load.spritesheet('jockey', 'assets/sprites/jockey.png', 183, 134)
     }
     create () {
         this.bg = this.game.add.sprite(0, 0, 'upgrade-bg')
@@ -26,7 +27,13 @@ class Upgrade {
         this.horse.scale.setTo(3, 3)
         this.horse.smoothed = false
         this.horse.animations.add('running')
-        this.horse.animations.play('running', 30, true)
+        this.horse.animations.play('running', 20, true)
+        
+        this.jockeySprite = this.game.add.sprite(240, 240, 'jockey')
+        this.jockeySprite.scale.setTo(3, 3)
+        this.jockeySprite.smoothed = false
+        this.jockeySprite.animations.add('running')
+        this.jockeySprite.animations.play('running', 20, true)
         
         this.bag = this.game.add.sprite(160, 180, 'upgrade-bag')
         this.bag.scale.setTo(4, 4)
