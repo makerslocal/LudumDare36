@@ -39,7 +39,7 @@ class Map extends graphlib.Graph {
 	        }
 		} else { //We were passed a saved map, let's just reconstruct the map from that.
 			for ( var idx in saved.nodes ) {
-				newNode = new City(saved.nodes[idx].name, saved.nodes[idx].newx, saved.nodes[idx].newy, game);
+				newNode = new City(saved.nodes[idx].name, saved.nodes[idx].x, saved.nodes[idx].y, game);
 				this.setNode(saved.nodes[idx].name, newNode);
 			}
 			this.rootNode = this.node(saved.rootNodeName);
@@ -63,8 +63,8 @@ class Map extends graphlib.Graph {
 		var cities = this.getCities();
 		for ( var idx in cities ) {
 			a.push({
-				x: cities[idx].x,
-				y: cities[idx].y,
+				x: cities[idx].originalX,
+				y: cities[idx].originalY,
 				name: cities[idx].name
 			});
 		}
