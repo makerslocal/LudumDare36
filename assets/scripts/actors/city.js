@@ -44,6 +44,6 @@ class City extends Phaser.Sprite {
         this.nameText.setTextBounds(this.x + this.width/2 - 100, this.y-30, 200, 50);
         this.nameText.setShadow(1, 1, 'rgba(0,0,0,0.5)', 2);
         this.alpha = 0.4
-        this.nameText.alpha = 0
+        this.nameText.alpha = 0.4
     }
 }
