@@ -55,7 +55,7 @@ class StatsMenu extends Phaser.Sprite {
             
             if(p === 6) {
                 this.game.add.text(60, 
-                                   400 + (20 * p + 1), 
+                                   400 + (20 * (p + 1)), 
                                    '...and more', 
                                    { 
                                         font: 'Inconsolata, monospace', 
