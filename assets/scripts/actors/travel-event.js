@@ -20,8 +20,9 @@ class TravelEvent {
 
 
 		if ( this.effects.money != 0 ) {
-			this.text += " You lose " + -(this.effects.money) + " gold as a result.";
+			this.text += " You " + (this.effects.money>0 ? "gain " + this.effects.money : "lose " + -(this.effects.money)) + " gold.";
 		}
+
 		if ( this.effects.health < 0 ) {
 			this.text += " You are dealt " + -(this.effects.health) + " damage.";
 		} else if ( this.effects.health > 0 ) {

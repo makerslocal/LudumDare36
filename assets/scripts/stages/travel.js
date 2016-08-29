@@ -27,7 +27,7 @@ class Travel {
 		for ( var idx in player.packages ) {
 			if ( player.packages[idx].destination == this.goingTo.name ) {
 				this.events.push(new TravelEvent({
-					text: "You deliver a package to " + this.goingTo.name + ".",
+					text: "You deliver a package to its destination, just outside of " + this.goingTo.name + ".",
 					money: player.packages[idx].bounty
 				}));
 				player.packages.splice(idx,1); //remove 1 element from player.packages, starting at element idx. neat!
@@ -58,7 +58,7 @@ class Travel {
         this.infoText = this.game.add.text(
 				80, 
 				480, 
-				'You and your jockey leave ' + this.comingFrom.name + '...', 
+				'You and your jockey depart from ' + this.comingFrom.name + '.', 
 				{ font: 'Inconsolata, monospace', fill: '#5a3404', stroke: '#333333', fontSize: '30px', wordWrap: true, wordWrapWidth: 800 }
 		);
         
@@ -118,7 +118,7 @@ class Travel {
                         this.game.state.start('game-over')
                 }
                 else if(this.intervalIndex - 1 === this.events.length)
-                    this.infoText.text = '...and the lonely road gives way to ' + this.goingTo.name  + '.'
+                    this.infoText.text = 'You stop in ' + this.goingTo.name  + ' to rest and restock on supplies.'
 
                 this.horse.animations.stop()
             }
