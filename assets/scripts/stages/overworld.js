@@ -86,7 +86,7 @@ class Overworld {
 				}
 			}
 			if ( loadedPlayer ) {
-				this.player = new Player(this.game, this.map.rootNode, savedPlayer);
+				this.player = new Player(this.game, this.map.node(savedPlayer.cityName), savedPlayer);
 			} else {
 				this.player = new Player(this.game, this.map.rootNode);
 			}
