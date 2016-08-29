@@ -3,9 +3,10 @@ class Travel {
         this.game = game
     }
     
-    init(player, road) {
+    init(player, road, map) {
         this.player = player
         this.events = this.generateEvents(road.treachery, road.length)
+        this.map = map
     }
     
     preload () {
@@ -14,15 +15,22 @@ class Travel {
         this.game.load.image('t-info', 'assets/sprites/travel-info.png')
     }
     create () {
+        
         this.sky = this.game.add.sprite(0, 0, 't-sky')
         this.sky.scale.setTo(4, 4)
+        this.sky.smoothed = false
+        
         this.background = this.game.add.sprite(0, 0, 't-bg')
         this.background.scale.setTo(4, 4)
+        this.background.smoothed = false
         
         this.info = this.game.add.sprite(0, 0, 't-info')
         this.info.scale.setTo(4, 4)
+        this.info.smoothed = false
         
-        this.horse = this.game.add.sprite(180, 280, 'horse', 0)
+        this.infoText = this.game.add.text(80, 480, 'You and your jockey leave town...', { font: 'Inconsolata, monospace', fill: '#5a3404', stroke: '#333333', fontSize: '30px', wordWrap: true, wordWrapWidth: 800 })
+        
+        this.horse = this.game.add.sprite(120, 280, 'horse', 0)
         this.horse.animations.add('running')
         this.horse.animations.play('running', 30, true)
         this.horse.scale.x *= -1
@@ -45,7 +53,7 @@ class Travel {
     update () {
         if(this.horse.x < this.interval * this.intervalIndex) {
             if(this.intervalIndex - 1 === this.events.length + 1) {
-                this.game.state.start('overworld', true)
+                this.game.state.start('overworld', true, false, this.map)
                 return
             }
             this.horse.x += 4
@@ -54,7 +62,9 @@ class Travel {
         }
         else {
             if(typeof this.events[this.intervalIndex - 1] !== 'undefined')
-                this.infoText = this.game.add.text(180 * 4, 280 * 4, this.events[this.intervalIndex - 1].text)
+                this.infoText.text = this.events[this.intervalIndex - 1].text
+            else if(this.intervalIndex - 1 === this.events.length)
+                this.infoText.text = '...and the lonely road gives way to town.'
         }
     }
     render () {
