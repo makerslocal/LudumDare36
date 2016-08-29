@@ -1,9 +1,6 @@
 class Package {
-    constructor(src,dst,bounty) {
-        
-		this.source = src;
+    constructor(dst,bounty) {
 		this.destination = dst;
 		this.bounty = bounty;
-        
     }
 }
