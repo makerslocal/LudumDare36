@@ -85,6 +85,8 @@ class Travel {
                     if(typeof event.effects.money !== 'undefined')
                         this.player.money += event.effects.money
 
+                    if(this.player.health < 0)
+                        this.game.state.start('game-over')
                     console.log(this.player)
                 }
                 else if(this.intervalIndex - 1 === this.events.length)
