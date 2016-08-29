@@ -55,7 +55,8 @@ class Map extends graphlib.Graph {
 			a.push({
 				x: cities[idx].originalX,
 				y: cities[idx].originalY,
-				name: cities[idx].name
+				name: cities[idx].name,
+				packages: cities[idx].packages
 			});
 		}
 		return {
