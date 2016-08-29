@@ -9,10 +9,9 @@ class Overworld {
         this.statsMenu = null
     }
 
-    init(map) {
-        if(typeof map !== 'undefined' && map !== null)
-            this.map = new Map(this.game, map)
-        else this.map = null
+    init(mapDump, playerDump) {
+        this.mapDump = mapDump
+        this.playerDump = playerDump
     }
     preload() {
         // load images, sounds
@@ -46,6 +45,9 @@ class Overworld {
         for(var key in this.inputs.keys)
             this.inputs.keys[key].onUp.add(this.keyHandler, this)
         
+        if(typeof this.mapDump !== 'undefined' && this.mapDump !== null)
+            this.map = new Map(this.game, this.mapDump)
+            
         if(this.map === null) {
 			var loadedMap = false;
 			var savedMap = null;
@@ -63,6 +65,7 @@ class Overworld {
 			}
 		}
             
+        
         var loadedPlayer = false;
 		var savedPlayer = null;
 		if ( this.storageAvailable() ) {
@@ -73,7 +76,9 @@ class Overworld {
 		}
 		if ( loadedPlayer ) {
 			this.player = new Player(this.game, this.map.rootNode, savedPlayer);
-		} else {
+		} else if (typeof this.playerDump !== 'undefined' && this.playerDump !== null) {
+            this.player = new Player(this.game, this.playerDump.city, this.playerDump)
+        } else {
 			this.player = new Player(this.game, this.map.rootNode);
 		}
 
@@ -298,6 +303,7 @@ class Overworld {
     movePlayerToClickedCity() {
         this.game.input.keyboard.onUpCallback = function () {}
         this.game.input.mouse.mouseUpCallback = function () {}
+        this.player.city = this.getClickedCity()
         this.game.state.start('travel', true, false, this.player, this.selectedRoad.treachery, this.map.dumps())
     }
 }
