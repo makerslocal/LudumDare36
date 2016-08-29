@@ -48,7 +48,7 @@ class Upgrade {
             }
         }, this)
         
-        this.game.add.text(165, 155, '💰 300', 
+        this.game.add.text(165, 155, '\uD83D\uDCB0 300', 
             { 
                 font: 'Helvetica Neue, sans-serif',
                 fill: '#78410C', stroke: '#78410C',
@@ -81,7 +81,7 @@ class Upgrade {
             console.log(this.player)
         }, this)
                 
-        this.game.add.text(165, 355, '💰 500', 
+        this.game.add.text(165, 355, '\uD83D\uDCB0 500', 
             { 
                 font: 'Helvetica Neue, sans-serif',
                 fill: '#78410C', stroke: '#78410C',
