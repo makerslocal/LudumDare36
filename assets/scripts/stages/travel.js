@@ -46,12 +46,12 @@ class Travel {
                 this.horse.animations.play('running', 30, true)
             }
         }.bind(this)
-        this.game.input.mouse.mouseUpCallback = function (e) {
+        this.game.input.onTap.add(function (e) {
             if(this.horse.x < this.interval * this.intervalIndex) return
 
             this.horse.animations.play('running', 30, true)
             this.intervalIndex++
-        }.bind(this)
+        }, this);
         
         this.timer = this.game.time.create(false)
         this.timer.loop(Start.FADE_TIMEOUT, this.goToOverworld.bind(this))

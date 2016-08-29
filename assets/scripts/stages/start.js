@@ -8,13 +8,13 @@ class Start {
         this.game.load.spritesheet('sign', 'assets/sprites/start-button.png', 48, 58)
     }
     create () {
-        this.game.add.image(0, 0, 'start')
+        this.game.add.image(0, 0, 'start');
         this.game.input.keyboard.onUpCallback = function (e) {
             this.beginGame()
         }.bind(this)
-        this.game.input.mouse.mouseUpCallback = function (e) {
-            this.beginGame()
-        }.bind(this)
+		this.game.input.onTap.add(function() {
+			this.beginGame()
+		}, this);
         
         this.timer = this.game.time.create(false)
         this.timer.loop(Start.FADE_TIMEOUT, this.beginGame.bind(this))
