@@ -212,8 +212,8 @@ class Overworld {
 				road.text = this.game.add.text(
 						road.line.midPoint().x,
 						road.line.midPoint().y,
-						road.length + ' ' + (road.length>1 ? 'weeks' : 'week') + ' ' + treacheryRating,
-						{ font: 'Amatic SC, serif', fill: '#615C45', stroke: '#615C45', fontSize: '18px', fontWeight: 'bold' }
+						'\u231B' + road.length + '  ' + treacheryRating,
+						{ font: 'Inconsolata, monospace', fill: '#615C45', stroke: '#615C45', fontSize: '18px', fontWeight: 'bold' }
 					);
 				var angle = this.map.getCityAngle(road.co, road.cf);
 				if ( angle > Math.PI*0.5 && angle < Math.PI*1.5 ) {
