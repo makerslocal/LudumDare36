@@ -71,8 +71,14 @@ class Travel {
             this.sky.x -= 4
         }
         else {
-            if(typeof this.events[this.intervalIndex - 1] !== 'undefined')
+            if(typeof this.events[this.intervalIndex - 1] !== 'undefined') {
                 this.infoText.text = this.events[this.intervalIndex - 1].text
+                
+                if(typeof this.events[this.intervalIndex - 1].health !== 'undefined')
+                    this.player.health += this.events[this.intervalIndex - 1].health
+                if(typeof this.events[this.intervalIndex - 1].money !== 'undefined')
+                    this.player.money += this.events[this.intervalIndex - 1].money
+            }
             else if(this.intervalIndex - 1 === this.events.length)
                 this.infoText.text = '...and the lonely road gives way to town.'
                 
