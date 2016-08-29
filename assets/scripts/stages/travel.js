@@ -30,10 +30,11 @@ class Travel {
         
         this.infoText = this.game.add.text(80, 480, 'You and your jockey leave town...', { font: 'Inconsolata, monospace', fill: '#5a3404', stroke: '#333333', fontSize: '30px', wordWrap: true, wordWrapWidth: 800 })
         
-        this.horse = this.game.add.sprite(120, 280, 'horse', 0)
+        this.horse = this.game.add.sprite(120, 160, 'horse', 0)
         this.horse.animations.add('running')
         this.horse.animations.play('running', 30, true)
         this.horse.scale.x *= -1
+        this.horse.scale.setTo(-2, 2)
         
         this.interval = Math.floor(this.game.camera.width / (this.events.length + 1))
         this.intervalIndex = 1 // 1-indexed
