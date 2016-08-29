@@ -71,18 +71,26 @@ class Travel {
             this.sky.x -= 4
         }
         else {
-            if(typeof this.events[this.intervalIndex - 1] !== 'undefined') {
-                this.infoText.text = this.events[this.intervalIndex - 1].text
-                
-                if(typeof this.events[this.intervalIndex - 1].health !== 'undefined')
-                    this.player.health += this.events[this.intervalIndex - 1].health
-                if(typeof this.events[this.intervalIndex - 1].money !== 'undefined')
-                    this.player.money += this.events[this.intervalIndex - 1].money
+            if(this.horse.animations.getAnimation('running').isPlaying) {
+                if(typeof this.events[this.intervalIndex - 1] !== 'undefined') {
+                    var event = this.events[this.intervalIndex - 1]
+                    this.infoText.text = event.text
+
+                    console.log(this.player)
+                    console.log(event.effects)
+
+                    if(typeof event.effects.health !== 'undefined')
+                        this.player.health += event.effects.health
+                    if(typeof event.effects.money !== 'undefined')
+                        this.player.money += event.effects.money
+
+                    console.log(this.player)
+                }
+                else if(this.intervalIndex - 1 === this.events.length)
+                    this.infoText.text = '...and the lonely road gives way to town.'
+
+                this.horse.animations.stop()
             }
-            else if(this.intervalIndex - 1 === this.events.length)
-                this.infoText.text = '...and the lonely road gives way to town.'
-                
-            this.horse.animations.stop()
         }
     }
     render () {
@@ -105,7 +113,7 @@ class Travel {
 				res.push(new TravelEvent({
 					text: "\"Stick 'em up! This is a stick up!\"",
 					health: this.player.stats.health * -0.1,
-					money: this.player.money * 0.8
+					money: this.player.money * -0.8
 				}));
 			}
 
