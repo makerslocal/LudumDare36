@@ -47,6 +47,8 @@ class Overworld {
         
         if(typeof this.mapDump !== 'undefined' && this.mapDump !== null)
             this.map = new Map(this.game, this.mapDump)
+        if(typeof this.playerDump !== 'undefined' && this.playerDump !== null)
+            this.player = new Player(this.game, this.playerDump.city, this.playerDump)
             
         if(this.map === null) {
 			var loadedMap = false;
@@ -83,13 +85,15 @@ class Overworld {
 				this.player = new Player(this.game, this.map.rootNode);
 			}
 		}
+        
 
         this.cursor = this.player.city
         this.adjacentCities = this.map.getConnectedCities(this.cursor)
         
+        this.player.city.alpha = 1
+        this.player.city.nameText.alpha = 1 
+        
         for(var c in this.adjacentCities){
-            this.player.city.alpha = 1
-            this.player.city.nameText.alpha = 1
             this.adjacentCities[c].alpha = 1
             this.adjacentCities[c].nameText.alpha = 1
         }
