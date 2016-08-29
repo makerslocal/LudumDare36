@@ -17,7 +17,7 @@ class Overworld {
         this.game.load.spritesheet('horse', 'assets/sprites/horse.png', 183, 134)
     }
     create() {
-        this.game.stage.backgroundColor = '#5a3404'
+        this.game.stage.backgroundColor = '#D5B783'
         this.game.time.desiredFps = 30
         this.game.world.setBounds(0, 0, 2 * this.game.camera.width, 2* this.game.camera.height)
         this.game.camera.setPosition(
@@ -106,7 +106,7 @@ class Overworld {
         }
     }
     render() {
-        
+
     }
     
     
@@ -123,14 +123,13 @@ class Overworld {
         for(var r in rs) {
             var road = rs[r]
             if(road.isConnectedTo(this.player.city))
-                this.graphics.lineStyle(3, 0x4bd49c, 1)
-            else this.graphics.lineStyle(3, 0x4bd49c, 0.1)
+                this.graphics.lineStyle(3, 0x705734, 0.5)
+            else this.graphics.lineStyle(3, 0x705734, 0.15)
             this.graphics.moveTo(road.co.x + 32, road.co.y + 24)
             this.graphics.lineTo(road.cf.x + 32, road.cf.y + 24)
             
             if(road.isConnectedTo(this.player.city)) {
-                road.text = this.game.add.text(road.line.midPoint().x, road.line.midPoint().y, road.length + ' wk', { font: 'Inconsolata, monospace', fill: '#4bd49c', stroke: '#4bd49c', fontSize: '22px' })
-                
+                                
                 var treacheryRating = ''
                 
                 for(var i = 1; i <= 5; i++)
@@ -138,7 +137,23 @@ class Overworld {
                         treacheryRating += '\u2605'
                     else treacheryRating += '\u2606'
                 
-                road.treacheryText = this.game.add.text(road.line.midPoint().x - (treacheryRating.length * 11) / 2, road.line.midPoint().y + 30, treacheryRating, { font: 'monospace', fill: '#4bd49c', stroke: '#4bd49c', fontSize: '22px' })
+                //road.treacheryText = this.game.add.text(road.line.midPoint().x + (treacheryRating.length * 11) / 2, road.line.midPoint().y + 30, treacheryRating, { font: 'monospace', fill: '#615C45', stroke: '#615C45', fontSize: '22px' });
+				//road.treacheryText.rotation = road.text.rotation;
+				
+				road.text = this.game.add.text(
+						road.line.midPoint().x,
+						road.line.midPoint().y,
+						road.length + ' ' + (road.length>1 ? 'weeks' : 'week') + ' ' + treacheryRating,
+						{ font: 'Bookman, serif', fill: '#615C45', stroke: '#615C45', fontSize: '18px' }
+					);
+				var angle = this.map.getCityAngle(road.co, road.cf);
+				console.log(angle);
+				if ( angle > Math.PI*0.5 && angle < Math.PI*1.5 ) {
+					angle -= Math.PI;
+					console.log("!" + angle);
+				}
+				//road.text.rotation = angle;
+
             }
                 
         }

@@ -135,6 +135,15 @@ class Map extends graphlib.Graph {
 	getCityDistance(a,b) {
 		return Math.hypot(a.x-b.x, a.y-b.y); //lol
 	}
+
+	getCityAngle(a,b) {
+		//thanks http://stackoverflow.com/questions/7586063/how-to-calculate-the-angle-between-a-line-and-the-horizontal-axis
+		var angle = Math.atan2(a.y-b.y, a.x-b.x);
+		while ( angle < 0 ) {
+			angle += Math.PI * 2;
+		}
+		return angle;
+	}
 	
 }
 
