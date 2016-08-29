@@ -32,6 +32,7 @@ class Overworld {
             this.inputs.keys[key].onUp.add(this.keyHandler, this)
         
         this.map = new Map(this.game)
+        this.game.map = this.map
         this.player = new Player(this.game, this.map.rootNode)
         this.cursor = this.player.city
         this.adjacentCities = this.map.getConnectedCities(this.cursor)
@@ -237,7 +238,8 @@ class Overworld {
         return this.player.city.name === this.getClickedCity().name
     }
     movePlayerToClickedCity() {
-        throw new Error('Unimplemented')
-        this.game.state.start('travel', false, false, this.player, this.selectedRoad.treachery)
+        this.game.input.keyboard.onUpCallback = function () {}
+        this.game.input.mouse.mouseUpCallback = function () {}
+        this.game.state.start('travel', true, false, this.player, this.selectedRoad.treachery)
     }
 }
