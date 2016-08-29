@@ -23,7 +23,7 @@ class Overworld {
     }
 	storageAvailable() {
 		try {
-			var storage = window[type], x = '__storage_test__';
+			var storage = window.localStorage, x = '__storage_test__';
 			storage.setItem(x, x);
 			storage.removeItem(x);
 			return true;
@@ -50,9 +50,10 @@ class Overworld {
 			var loadedMap = false;
 			var savedMap = null;
 			if ( this.storageAvailable() ) {
-				savedMap = localStorage.getItem('pex_map');
+				savedMap = JSON.parse(localStorage.getItem('pex_map'));
 				if ( savedMap != null ) {
 					loadedMap = true;
+					console.log("Map loaded from localStorage");
 				}
 			}
 
@@ -65,16 +66,19 @@ class Overworld {
             
         var loadedPlayer = false;
 		var savedPlayer = null;
-		if ( this.storageAvailable() ) {
-			savedPlayer = localStorage.getItem('pex_player');
-			if ( savedPlayer != null ) {
-				loadedPlayer = true;
+		if ( this.player === null ) {
+			if ( this.storageAvailable() ) {
+				savedPlayer = JSON.parse(localStorage.getItem('pex_player'));
+				if ( savedPlayer != null ) {
+					loadedPlayer = true;
+					console.log("Player loaded from localStorage");
+				}
 			}
-		}
-		if ( loadedPlayer ) {
-			this.player = new Player(this.game, this.map.rootNode, savedPlayer);
-		} else {
-			this.player = new Player(this.game, this.map.rootNode);
+			if ( loadedPlayer ) {
+				this.player = new Player(this.game, this.map.rootNode, savedPlayer);
+			} else {
+				this.player = new Player(this.game, this.map.rootNode);
+			}
 		}
 
         this.cursor = this.player.city
@@ -93,6 +97,16 @@ class Overworld {
         this.roads = this.createRoads(this.map.getRoads())
         
         this.statsMenu = new StatsMenu(this.game, this.player)
+
+		//Save to disk
+		if ( this.storageAvailable() ) {
+			localStorage.setItem('pex_player', JSON.stringify(this.player.dumps()));
+			localStorage.setItem('pex_map', JSON.stringify(this.map.dumps()));
+			console.log("Game saved to localStorage");
+		} else {
+			console.log("Not saving to localStorage as it's not available");
+		}
+
     }
     update() {
         // logical update
