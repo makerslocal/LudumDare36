@@ -11,7 +11,7 @@ class Player extends Phaser.Sprite {
             carryingCapacity: 20
         }
         this.health = 48
-        this.letters = 3
+        this.packages = [ new Package() ]
         this.money = 500
 
 		if ( typeof saved !== 'undefined' ) { //we need to load saved player attrs
