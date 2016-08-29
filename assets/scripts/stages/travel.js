@@ -109,17 +109,13 @@ class Travel {
                     var event = this.events[this.intervalIndex - 1]
                     this.infoText.text = event.text
 
-                    console.log(this.player)
-                    console.log(event.effects)
-
                     if(typeof event.effects.health !== 'undefined')
                         this.player.health += event.effects.health
                     if(typeof event.effects.money !== 'undefined')
                         this.player.money += event.effects.money
 
-                    if(this.player.health < 0)
+                    if(this.player.health <= 0)
                         this.game.state.start('game-over')
-                    console.log(this.player)
                 }
                 else if(this.intervalIndex - 1 === this.events.length)
                     this.infoText.text = '...and the lonely road gives way to ' + this.goingTo.name  + '.'
