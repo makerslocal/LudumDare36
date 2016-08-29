@@ -9,6 +9,15 @@ class Overworld {
         this.statsMenu = null
     }
 
+    init(map) {
+        if(typeof map !== 'undefined' && map instanceof Map) {
+            this.map = map
+            var cities = this.map.getCities()
+            for(var c in cities)
+                this.game.add.existing(cities[c])
+        }
+        else this.map = null
+    }
     preload() {
         // load images, sounds
         this.game.load.image('city', 'assets/sprites/city.png')
@@ -31,8 +40,9 @@ class Overworld {
         for(var key in this.inputs.keys)
             this.inputs.keys[key].onUp.add(this.keyHandler, this)
         
-        this.map = new Map(this.game)
-        this.game.map = this.map
+        if(this.map === null)
+            this.map = new Map(this.game)
+            
         this.player = new Player(this.game, this.map.rootNode)
         this.cursor = this.player.city
         this.adjacentCities = this.map.getConnectedCities(this.cursor)
@@ -255,6 +265,6 @@ class Overworld {
     movePlayerToClickedCity() {
         this.game.input.keyboard.onUpCallback = function () {}
         this.game.input.mouse.mouseUpCallback = function () {}
-        this.game.state.start('travel', true, false, this.player, this.selectedRoad.treachery)
+        this.game.state.start('travel', true, false, this.player, this.selectedRoad.treachery, this.map)
     }
 }
