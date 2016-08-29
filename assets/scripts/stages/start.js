@@ -21,6 +21,7 @@ class Start {
         
         this.sign = this.game.add.sprite(this.game.camera.width * 1/2 + 50, this.game.camera.height * 4/6, 'sign', 0)
         this.sign.scale.setTo(2, 2)
+        this.sign.smoothed = false
         this.sign.animations.add('idle')
         this.sign.animations.play('idle', 5, true)
         
