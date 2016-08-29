@@ -15,14 +15,14 @@ class City extends Phaser.Sprite {
 		if ( packages === null ) { //generate packages
 			this.packages = Array();
 			var asdf = Math.random();
-			var nodes = map.nodes();
+			var nodes = knuthShuffle(map.nodes().slice(0));
 			if ( asdf < 0.25 ) {
-				this.packages.push(new Package(nodes[Math.floor(Math.random()*nodes.length)], Math.floor(Math.random()*1000)));
+				this.packages.push(new Package(nodes.pop(), Math.floor(Math.random()*1000)));
 			}
 			if ( asdf < 0.75 ) {
-				this.packages.push(new Package(nodes[Math.floor(Math.random()*nodes.length)], Math.floor(Math.random()*500)));
+				this.packages.push(new Package(nodes.pop(), Math.floor(Math.random()*500)));
 			}
-			this.packages.push(new Package(nodes[Math.floor(Math.random()*nodes.length)], Math.floor(Math.random()*300)));
+			this.packages.push(new Package(nodes.pop(), Math.floor(Math.random()*300)));
 		} else {
 			this.packages = packages;
 		}
