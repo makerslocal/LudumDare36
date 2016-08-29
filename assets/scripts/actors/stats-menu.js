@@ -48,8 +48,11 @@ class StatsMenu extends Phaser.Sprite {
         
         for(var p = 0; p < 3 && p < this.player.packages.length; p++) {
             var pkg = this.player.packages[p]
-            this.game.add.text(60, 400 + (60 * p), pkg.destination, { font: 'Inconsolata, monospace', fill: '#333333', stroke: '#333333', fontSize: '30px' })
-            this.game.add.text(190, 400 + (60 * p), pkg.bounty, { font: 'Inconsolata, monospace', fill: '#333333', stroke: '#333333', fontSize: '30px' })
+            var pkgText = this.game.add.text(60, 400 + (60 * p), pkg.destination, { font: 'Inconsolata, monospace', fill: '#333333', stroke: '#333333', fontSize: '30px' })
+            pkgText.fixedToCamera = true
+            var pkgValue = this.game.add.text(190, 400 + (60 * p), pkg.bounty, { font: 'Inconsolata, monospace', fill: '#333333', stroke: '#333333', fontSize: '30px' })
+            pkgValue.fixedToCamera = true
+            
         }
             
         
