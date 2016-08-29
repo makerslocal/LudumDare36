@@ -28,7 +28,7 @@ class Upgrade {
         this.horse.animations.add('running')
         this.horse.animations.play('running', 30, true)
         
-        this.bag = this.game.add.sprite(160, 280, 'upgrade-bag')
+        this.bag = this.game.add.sprite(160, 180, 'upgrade-bag')
         this.bag.scale.setTo(4, 4)
         this.bag.smoothed = false
         
@@ -37,19 +37,26 @@ class Upgrade {
         this.bag.events.onInputUp.add(function (e) {
             if(this.player.money > 300) {
                 this.player.money -= 300
-                this.player.stats.carryingCapacity += 5
+                this.player.stats.carryingCapacity += 1
             }
         }, this)
         
-        this.hat = this.game.add.sprite(760, 180, 'upgrade-hat')
-        this.hat.scale.setTo(4, 4)
-        this.hat.smoothed = false
-        this.hat.tint = 0x555555
-        
-        this.jockey = this.game.add.sprite(760, 280, 'upgrade-jockey')
-        this.jockey.scale.setTo(4, 4)
-        this.jockey.smoothed = false
-        this.jockey.tint = 0x555555
+        this.game.add.text(165, 155, '💰 300', 
+            { 
+                font: 'Helvetica Neue, sans-serif',
+                fill: '#78410C', stroke: '#78410C',
+                fontSize: '20px', fontWeight: 'bold',
+                boundsAlignH: 'center',
+                boundsAlignV: 'middle' 
+            })
+        this.game.add.text(165, 260, '+1 \uD83D\uDCE6',
+            { 
+                font: 'Helvetica Neue, sans-serif',
+                fill: '#78410C', stroke: '#78410C',
+                fontSize: '20px', fontWeight: 'bold',
+                boundsAlignH: 'center',
+                boundsAlignV: 'middle' 
+            })
         
         this.saddle = this.game.add.sprite(160, 380, 'upgrade-saddle')
         this.saddle.scale.setTo(4, 4)
@@ -66,6 +73,33 @@ class Upgrade {
             }
             console.log(this.player)
         }, this)
+                
+        this.game.add.text(165, 355, '💰 500', 
+            { 
+                font: 'Helvetica Neue, sans-serif',
+                fill: '#78410C', stroke: '#78410C',
+                fontSize: '20px', fontWeight: 'bold',
+                boundsAlignH: 'center',
+                boundsAlignV: 'middle' 
+            })  
+        this.game.add.text(165, 460, '+10 HP', 
+            { 
+                font: 'Helvetica Neue, sans-serif',
+                fill: '#78410C', stroke: '#78410C',
+                fontSize: '20px', fontWeight: 'bold',
+                boundsAlignH: 'center',
+                boundsAlignV: 'middle' 
+            })
+        
+        this.hat = this.game.add.sprite(760, 180, 'upgrade-hat')
+        this.hat.scale.setTo(4, 4)
+        this.hat.smoothed = false
+        this.hat.tint = 0x555555
+        
+        this.jockey = this.game.add.sprite(760, 280, 'upgrade-jockey')
+        this.jockey.scale.setTo(4, 4)
+        this.jockey.smoothed = false
+        this.jockey.tint = 0x555555
         
         this.shoe = this.game.add.sprite(760, 380, 'upgrade-shoe')
         this.shoe.scale.setTo(4, 4)
