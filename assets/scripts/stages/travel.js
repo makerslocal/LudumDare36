@@ -41,34 +41,50 @@ class Travel {
         this.game.input.keyboard.onUpCallback = function (e) {
             if(this.horse.x < this.interval * this.intervalIndex) return
             
-            if(e.keyCode === Phaser.Key.SPACEBAR)
+            if(e.keyCode === Phaser.Key.SPACEBAR) {
                 this.intervalIndex++
+                this.horse.animations.play('running', 30, true)
+            }
         }.bind(this)
         this.game.input.mouse.mouseUpCallback = function (e) {
             if(this.horse.x < this.interval * this.intervalIndex) return
 
+            this.horse.animations.play('running', 30, true)
             this.intervalIndex++
         }.bind(this)
+        
+        this.timer = this.game.time.create(false)
+        this.timer.loop(Start.FADE_TIMEOUT, this.goToOverworld.bind(this))
+                
+        this.overlay = this.game.add.graphics(0, 0)
+        this.overlay.opacity = 0
     }
     update () {
         if(this.horse.x < this.interval * this.intervalIndex) {
             if(this.intervalIndex - 1 === this.events.length + 1) {
-                this.game.state.start('overworld', true, false, this.map)
-                return
+                if(this.overlay.opacity === 0)
+                    this.goToOverworld()
+                else return
             }
             this.horse.x += 4
-            this.background.x -= 4
-            this.sky.x -= 8
+            this.background.x -= 8
+            this.sky.x -= 4
         }
         else {
             if(typeof this.events[this.intervalIndex - 1] !== 'undefined')
                 this.infoText.text = this.events[this.intervalIndex - 1].text
             else if(this.intervalIndex - 1 === this.events.length)
                 this.infoText.text = '...and the lonely road gives way to town.'
+                
+            this.horse.animations.stop()
         }
     }
     render () {
-        
+        this.overlay.clear()
+        this.overlay.beginFill(0x000000, this.overlay.opacity)
+        this.overlay.moveTo(0, 0)
+        this.overlay.drawRect(0, 0, this.camera.width, this.camera.height)
+        this.overlay.endFill()
     }
 	generateEvents(treachery, weeks) {
 		if ( typeof weeks === 'undefined' ) {
@@ -112,4 +128,18 @@ class Travel {
 		return res;
 			
 	}
+    
+    goToOverworld () {
+        
+        this.horse.animations.stop()
+        
+        if(this.overlay.opacity >= 1) {
+            this.game.input.keyboard.onUpCallback = function () {}
+            this.game.input.mouse.mouseUpCallback = function () {}
+            this.game.state.start('overworld')
+        }
+        else this.overlay.opacity += 0.1
+        
+        this.timer.start()
+    }
 }
