@@ -17,6 +17,12 @@ class Travel {
 			this.goingTo = road.co;
 		}
 
+		//pick up packages
+		while ( this.comingFrom.packages.length > 0 && player.packages.length < player.stats.carryingCapacity ) {
+			this.player.packages.push(this.comingFrom.packages.pop());
+		}
+
+		//deliver packages
 		this.events = this.generateEvents(road.treachery, road.length)
 		for ( var idx in player.packages ) {
 			if ( player.packages[idx].destination == this.goingTo.name ) {
