@@ -8,7 +8,7 @@ class Player extends Phaser.Sprite {
         this.city = city
         this.stats = {
             health: 50,
-            carryingCapacity: 20
+            carryingCapacity: 3
         }
         this.health = 48
         this.packages = []
