@@ -7,12 +7,12 @@ class Player extends Phaser.Sprite {
         this.name = 'Dumb Name'
         this.city = city
         this.stats = {
-            health: 50,
+            health: 10,
             carryingCapacity: 3
         }
-        this.health = 48
+        this.health = this.stats.health
         this.packages = []
-        this.money = 500
+        this.money = 100
 
 		if ( typeof saved !== 'undefined' ) { //we need to load saved player attrs
 			this.name = saved.name;
