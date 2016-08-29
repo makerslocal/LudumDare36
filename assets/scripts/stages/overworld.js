@@ -326,6 +326,6 @@ class Overworld {
         this.game.input.keyboard.onUpCallback = function () {}
         this.game.input.mouse.mouseUpCallback = function () {}
         this.player.city = this.getClickedCity()
-        this.game.state.start('travel', true, false, this.player.dumps(), this.selectedRoad.treachery, this.map.dumps())
+        this.game.state.start('travel', true, false, this.player.dumps(), this.selectedRoad, this.map.dumps())
     }
 }
