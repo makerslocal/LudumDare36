@@ -11,24 +11,25 @@ class Player extends Phaser.Sprite {
             carryingCapacity: 20
         }
         this.health = 48
-        this.packages = [ new Package() ]
+        this.packages = []
         this.money = 500
 
 		if ( typeof saved !== 'undefined' ) { //we need to load saved player attrs
 			this.name = saved.name;
 			this.stats = saved.stats;
 			this.health = saved.health;
-			this.letters = saved.letters;
-			this.money = saved.letters;
+			this.packages = saved.packages;
+			this.money = saved.money;
 		}
 
     }
 	dumps() {
 		return {
 			name: this.name,
+            cityName: this.city.name,
 			stats: this.stats,
 			health: this.health,
-			letters: this.letters,
+			packages: this.packages,
 			money: this.money
 		};
 	}

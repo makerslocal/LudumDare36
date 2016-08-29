@@ -51,7 +51,7 @@ class Overworld {
             var cities = this.map.getCities(),
                 playerCity = null
             for(var c in cities)
-                if(cities[c].name === this.playerDump.city.name)
+                if(cities[c].name === this.playerDump.cityName)
                     playerCity = cities[c]
             this.player = new Player(this.game, playerCity, this.playerDump)
         }
@@ -326,6 +326,6 @@ class Overworld {
         this.game.input.keyboard.onUpCallback = function () {}
         this.game.input.mouse.mouseUpCallback = function () {}
         this.player.city = this.getClickedCity()
-        this.game.state.start('travel', true, false, this.player, this.selectedRoad.treachery, this.map.dumps())
+        this.game.state.start('travel', true, false, this.player.dumps(), this.selectedRoad.treachery, this.map.dumps())
     }
 }
