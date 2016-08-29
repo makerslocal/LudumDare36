@@ -23,7 +23,7 @@ class City extends Phaser.Sprite {
                                            this.name,
                                            { font: 'Amatic SC, sans-serif',
                                              fill: '#211c05', stroke: '#FFB707',
-                                             fontSize: '24px', fontWeight: 'bold',
+                                             fontSize: '30px', fontWeight: 'bold',
                                              boundsAlignH: 'center',
                                              boundsAlignV: 'middle' })
         this.nameText.setTextBounds(this.x + this.width/2 - 100, this.y-30, 200, 50);
