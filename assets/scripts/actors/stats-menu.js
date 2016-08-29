@@ -30,13 +30,15 @@ class StatsMenu extends Phaser.Sprite {
         this.health.value = this.game.add.text(190, 360, this.player.health + '/' + this.player.stats.health, { font: 'Inconsolata, monospace', fill: '#333333', stroke: '#333333', fontSize: '30px' })
         this.health.value.fixedToCamera = true
         
-        this.letters = this.game.add.group()
+        this.packages = this.game.add.group()
         
-        this.letters.text = this.game.add.text(60, 400, 'Letters', { font: 'Inconsolata, monospace', fill: '#333333', stroke: '#333333', fontSize: '30px' })
-        this.letters.text.fixedToCamera = true
+        this.packages.text = this.game.add.text(60, 400, 'Packages', { font: 'Inconsolata, monospace', fill: '#333333', stroke: '#333333', fontSize: '30px' })
+        this.packages.text.fixedToCamera = true
         
-        this.letters.value = this.game.add.text(190, 400, this.player.letters + '/' + this.player.stats.carryingCapacity, { font: 'Inconsolata, monospace', fill: '#333333', stroke: '#333333', fontSize: '30px' })
-        this.letters.value.fixedToCamera = true
+        this.packages.value = this.game.add.text(190, 400, this.player.packages.length + '/' + this.player.stats.carryingCapacity, { font: 'Inconsolata, monospace', fill: '#333333', stroke: '#333333', fontSize: '30px' })
+        this.packages.value.fixedToCamera = true
+        
+        this.packageList = this.game.add.group()
         
         this.button = this.game.add.button(39, 572, 'button', function () {
             this.game.state.start('upgrade')
