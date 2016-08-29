@@ -53,9 +53,10 @@ class StatsMenu extends Phaser.Sprite {
         }
             
         
-        this.button = this.game.add.button(39, 572, 'button', function () {
-            this.game.state.start('upgrade')
-        })
+        this.button = this.game.add.button(39, 572, 'button', function (e) {
+            console.log(this.map.dumps())
+            this.game.state.start('upgrade', true, false, this.player.dumps(), this.map.dumps())
+        }, this.game.state.states.overworld)
         this.button.fixedToCamera = true
         this.button.text = this.game.add.text(100, 576, 'Upgrade', { font: 'Inconsolata, monospace', fill: '#e9bb8a', stroke: '#333333', fontSize: '30px' })
         this.button.text.fixedToCamera = true
