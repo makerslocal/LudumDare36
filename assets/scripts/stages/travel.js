@@ -172,7 +172,7 @@ class Travel {
 			if ( Math.random() < 0.10 ) {
 				res.push(new TravelEvent({
 					text: "Your jockey clumsily dropped some money on the ground.",
-					money: this.player.money * 0.95
+					money: this.player.money * -0.05
 				}));
 			}
 
