@@ -8,10 +8,10 @@ class TravelEvent {
 		
 		if ( typeof defaults === 'object' ) {
 			if ( typeof defaults.money !== 'undefined' ) {
-				this.effects.money = defaults.money;
+				this.effects.money = Math.ceil(defaults.money);
 			}
 			if ( typeof defaults.health !== 'undefined' ) {
-				this.effects.health = defaults.health;
+				this.effects.health = Math.ceil(defaults.health);
 			}
 			if ( typeof defaults.text === 'string' ) {
 				this.text = defaults.text;
