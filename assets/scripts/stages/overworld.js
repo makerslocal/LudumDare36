@@ -134,8 +134,8 @@ class Overworld {
         for(var r in rs) {
             var road = rs[r]
             if(road.isConnectedTo(this.player.city))
-                this.graphics.lineStyle(3, 0x705734, 0.5)
-            else this.graphics.lineStyle(3, 0x705734, 0.15)
+                this.graphics.lineStyle(3, 0x82653C, 1) //darker color
+            else this.graphics.lineStyle(3, 0xBB955F, 1) //lighter color
             this.graphics.moveTo(road.co.x + 32, road.co.y + 24)
             this.graphics.lineTo(road.cf.x + 32, road.cf.y + 24)
             
@@ -231,7 +231,7 @@ class Overworld {
         this.adjacentCities = this.map.getConnectedCities(this.cursor) 
         if(typeof this.selectedRoad !== 'undefined' && this.selectedRoad !== null) {
             this.graphics.beginFill()
-            this.graphics.lineStyle(3, 0x4bd49c, 1)
+            this.graphics.lineStyle(3, 0x82653C, 1)
             this.graphics.moveTo(this.selectedRoad.co.x + 32, this.selectedRoad.co.y + 24)
             this.graphics.lineTo(this.selectedRoad.cf.x + 32, this.selectedRoad.cf.y + 24)
             this.graphics.endFill()
