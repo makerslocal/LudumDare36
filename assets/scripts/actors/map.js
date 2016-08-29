@@ -5,8 +5,6 @@ class Map extends graphlib.Graph {
 	
 		this.rootNode = null;
 
-		console.log("Threshold: " + 0.10*game.world.width);
-
 		var prevNode = null;
 
 		if ( typeof saved === 'undefined' ) { //We don't have a previous map, we need to generate one.
@@ -18,7 +16,6 @@ class Map extends graphlib.Graph {
 				var bailout = 0; //hail-mary in case we would otherwise infinitely loop
 			    do {
 					bailout++;
-					console.log("new node at " + i);
 					newx = Math.random();
 					newy = Math.random();
 					newNode = new FakeCity(name, newx, newy, game);
@@ -27,13 +24,12 @@ class Map extends graphlib.Graph {
 				newNode = new City(name,newx,newy,game); //make a real node
 				
 				if ( this.rootNode != null ) {
-					console.log("Decided on distance " + this.getCityDistance(newNode, closestNode) + " From closest node " + closestNode.name);
+                    
 				}
 	
 	            this.setNode(name, newNode);
 			    if ( this.rootNode == null ) {
 				    //must be the first node we've ever created
-				    console.log("ROOT NODE is " + newNode.name);
 				    this.rootNode = newNode;
 			    } 
 	        }
@@ -46,15 +42,9 @@ class Map extends graphlib.Graph {
 		}
 
 		this.generateCityFullMesh();
-		console.log("EDGES (initial): " + this.edges().length);
 		this.removeIntersectingPaths();
-		console.log("EDGES (pruned): " + this.edges().length);
 		this.removePathsLongerThan(500);
-		console.log("EDGES (shrunk): " + this.edges().length);
 		this.fixOrphans();
-		console.log("EDGES (fixed): " + this.edges().length);
-
-		console.log(this.dumps());
 
     }
 
