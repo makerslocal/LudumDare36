@@ -1,5 +1,5 @@
 class Map extends graphlib.Graph {
-    constructor (game) {
+    constructor (game, saved) {
     
 		super({ directed: false });
 	
@@ -8,33 +8,42 @@ class Map extends graphlib.Graph {
 		console.log("Threshold: " + 0.10*game.world.width);
 
 		var prevNode = null;
-	    for ( var i=0; i<Map.CITY_COUNT; i++ ) {
 
-			name = Map.CITY_NAMES.pop();
-
-			var newNode, closestNode, newx, newy;
-			var bailout = 0; //hail-mary in case we would otherwise infinitely loop
-		    do {
-				bailout++;
-				console.log("new node at " + i);
-				newx = Math.random();
-				newy = Math.random();
-				newNode = new FakeCity(name, newx, newy, game);
-				closestNode = this.getClosestCity(newNode);
-			} while ( this.rootNode != null && this.getCityDistance(newNode, closestNode) < 0.10*game.world.width && bailout < 20 );
-			//newNode = new City(name,newx,newy,game); //make a real node
-			
-			if ( this.rootNode != null ) {
-				console.log("Decided on distance " + this.getCityDistance(newNode, closestNode) + " From closest node " + closestNode.name);
+		if ( typeof saved === 'undefined' ) { //We don't have a previous map, we need to generate one.
+			for ( var i=0; i<Map.CITY_COUNT; i++ ) {
+	
+				name = Map.CITY_NAMES.pop();
+	
+				var newNode, closestNode, newx, newy;
+				var bailout = 0; //hail-mary in case we would otherwise infinitely loop
+			    do {
+					bailout++;
+					console.log("new node at " + i);
+					newx = Math.random();
+					newy = Math.random();
+					newNode = new FakeCity(name, newx, newy, game);
+					closestNode = this.getClosestCity(newNode);
+				} while ( this.rootNode != null && this.getCityDistance(newNode, closestNode) < 0.10*game.world.width && bailout < 20 );
+				//newNode = new City(name,newx,newy,game); //make a real node
+				
+				if ( this.rootNode != null ) {
+					console.log("Decided on distance " + this.getCityDistance(newNode, closestNode) + " From closest node " + closestNode.name);
+				}
+	
+	            this.setNode(name, newNode);
+			    if ( this.rootNode == null ) {
+				    //must be the first node we've ever created
+				    console.log("ROOT NODE is " + newNode.name);
+				    this.rootNode = newNode;
+			    } 
+	        }
+		} else { //We were passed a saved map, let's just reconstruct the map from that.
+			for ( var idx in saved.nodes ) {
+				newNode = new FakeCity(saved.nodes[idx].name, saved.nodes[idx].newx, saved.nodes[idx].newy, game);
+				this.setNode(saved.nodes[idx].name, newNode);
 			}
-
-            this.setNode(name, newNode);
-		    if ( this.rootNode == null ) {
-			    //must be the first node we've ever created
-			    console.log("ROOT NODE is " + newNode.name);
-			    this.rootNode = newNode;
-		    } 
-        }
+			this.rootNode = this.node(saved.rootNodeName);
+		}
 
 		this.generateCityFullMesh();
 		console.log("EDGES (initial): " + this.edges().length);
@@ -45,7 +54,26 @@ class Map extends graphlib.Graph {
 		this.fixOrphans();
 		console.log("EDGES (fixed): " + this.edges().length);
 
+		console.log(this.dumps());
+
     }
+
+	dumps() {
+		var a = Array();
+		var cities = this.getCities();
+		for ( var idx in cities ) {
+			a.push({
+				x: cities[idx].x,
+				y: cities[idx].y,
+				name: cities[idx].name
+			});
+		}
+		return JSON.stringify({
+			rootNodeName: this.rootNode.name,
+			nodes: a
+		});
+	}
+
     getCities() {
         var nodes = this.nodes();
 		nodes.map(function(val,idx,arr) {
