@@ -21,7 +21,7 @@ class Map extends graphlib.Graph {
 					newNode = new FakeCity(name, newx, newy, game);
 					closestNode = this.getClosestCity(newNode);
 				} while ( this.rootNode != null && this.getCityDistance(newNode, closestNode) < 0.10*game.world.width && bailout < 20 );
-				newNode = new City(name,newx,newy,game); //make a real node
+				newNode = new City(name,newx,newy,game,null,this); //make a real node
 				
 				if ( this.rootNode != null ) {
                     
@@ -35,7 +35,7 @@ class Map extends graphlib.Graph {
 	        }
 		} else { //We were passed a saved map, let's just reconstruct the map from that.
 			for ( var idx in saved.nodes ) {
-				newNode = new City(saved.nodes[idx].name, saved.nodes[idx].x, saved.nodes[idx].y, game);
+				newNode = new City(saved.nodes[idx].name, saved.nodes[idx].x, saved.nodes[idx].y, game, saved.nodes[idx].packages);
 				this.setNode(saved.nodes[idx].name, newNode);
 			}
 			this.rootNode = this.node(saved.rootNodeName);

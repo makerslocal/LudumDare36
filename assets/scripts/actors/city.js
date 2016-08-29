@@ -1,5 +1,5 @@
 class City extends Phaser.Sprite {
-    constructor(name,x,y,game) {
+    constructor(name,x,y,game,packages,map) {
         
         super(game, 
               Math.floor(x * (game.world.width - game.camera.width) + game.camera.width / 2), 
@@ -11,6 +11,21 @@ class City extends Phaser.Sprite {
 		this.game.add.existing(this);
         
         this.name = name;
+
+		if ( packages === null ) { //generate packages
+			this.packages = Array();
+			var asdf = Math.random();
+			var nodes = map.nodes();
+			if ( asdf < 0.25 ) {
+				this.packages.push(new Package(nodes[Math.floor(Math.random()*nodes.length)], Math.floor(Math.random()*1000)));
+			}
+			if ( asdf < 0.75 ) {
+				this.packages.push(new Package(nodes[Math.floor(Math.random()*nodes.length)], Math.floor(Math.random()*500)));
+			}
+			this.packages.push(new Package(nodes[Math.floor(Math.random()*nodes.length)], Math.floor(Math.random()*300)));
+		} else {
+			this.packages = packages;
+		}
         
         this.inputEnabled = true;
         this.input.useHandCursor = true;
