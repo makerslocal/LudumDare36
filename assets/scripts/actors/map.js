@@ -68,10 +68,10 @@ class Map extends graphlib.Graph {
 				name: cities[idx].name
 			});
 		}
-		return JSON.stringify({
+		return {
 			rootNodeName: this.rootNode.name,
 			nodes: a
-		});
+		};
 	}
 
     getCities() {
