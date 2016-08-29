@@ -39,7 +39,7 @@ class Map extends graphlib.Graph {
 	        }
 		} else { //We were passed a saved map, let's just reconstruct the map from that.
 			for ( var idx in saved.nodes ) {
-				newNode = new FakeCity(saved.nodes[idx].name, saved.nodes[idx].newx, saved.nodes[idx].newy, game);
+				newNode = new City(saved.nodes[idx].name, saved.nodes[idx].newx, saved.nodes[idx].newy, game);
 				this.setNode(saved.nodes[idx].name, newNode);
 			}
 			this.rootNode = this.node(saved.rootNodeName);
