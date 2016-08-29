@@ -8,6 +8,16 @@ class Overworld {
         this.current = null
         this.statsMenu = null
     }
+    
+    init(map) {
+        if(typeof map !== 'undefined' && map instanceof Map) {
+            this.map = map
+            var cities = this.map.getCities()
+            console.log(cities)
+            for(var c in cities)
+                this.game.add.existing(cities[c])
+        }
+    }
 
     preload() {
         // load images, sounds
@@ -31,8 +41,9 @@ class Overworld {
         for(var key in this.inputs.keys)
             this.inputs.keys[key].onUp.add(this.keyHandler, this)
         
-        this.map = new Map(this.game)
-        this.game.map = this.map
+        if(typeof this.map === 'undefined' || this.map === null)
+            this.map = new Map(this.game)
+            
         this.player = new Player(this.game, this.map.rootNode)
         this.cursor = this.player.city
         this.adjacentCities = this.map.getConnectedCities(this.cursor)
