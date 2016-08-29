@@ -6,10 +6,8 @@ class Travel {
     init(player, road, map) {
         
 		this.player = player
-        this.events = this.generateEvents(road.treachery, road.length)
         this.map = map
 		
-		this.road = road;
 		console.log("cf=" + road.cf.name + ",co=" + road.co.name + ",player.cityName=" + player.cityName);
 		if ( road.cf.name == player.cityName ) {
 			this.comingFrom = road.co;
@@ -17,6 +15,17 @@ class Travel {
 		} else {
 			this.comingFrom = road.cf;
 			this.goingTo = road.co;
+		}
+
+		this.events = this.generateEvents(road.treachery, road.length)
+		for ( var idx in player.packages ) {
+			if ( player.packages[idx].destination == this.goingTo.name ) {
+				this.events.push(new TravelEvent({
+					text: "You deliver a package to " + this.goingTo.name + ".",
+					money: player.packages[idx].bounty
+				}));
+				player.packages.splice(idx,1); //remove 1 element from player.packages, starting at element idx. neat!
+			}
 		}
 
     }
@@ -40,7 +49,6 @@ class Travel {
         this.info.scale.setTo(4, 4)
         this.info.smoothed = false
         
-		console.log(this.road);
         this.infoText = this.game.add.text(
 				80, 
 				480, 
