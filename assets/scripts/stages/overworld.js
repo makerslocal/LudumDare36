@@ -204,7 +204,7 @@ class Overworld {
 						road.line.midPoint().x,
 						road.line.midPoint().y,
 						road.length + ' ' + (road.length>1 ? 'weeks' : 'week') + ' ' + treacheryRating,
-						{ font: 'Bookman, serif', fill: '#615C45', stroke: '#615C45', fontSize: '18px' }
+						{ font: 'Amatic SC, serif', fill: '#615C45', stroke: '#615C45', fontSize: '18px', fontWeight: 'bold' }
 					);
 				var angle = this.map.getCityAngle(road.co, road.cf);
 				console.log(angle);
