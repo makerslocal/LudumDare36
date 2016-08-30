@@ -7,7 +7,7 @@ class Player extends Phaser.Sprite {
         this.name = 'Dumb Name'
         this.city = city
         this.stats = {
-            health: 10,
+            health: 20,
             carryingCapacity: 3
         }
         this.health = this.stats.health
