@@ -26,19 +26,22 @@ class Travel {
 
 		//deliver packages
 		this.events = this.generateEvents(road.treachery, road.length)
+		var newpackages = Array();
 		for ( var idx in player.packages ) {
 			if ( player.packages[idx].destination == this.goingTo.name ) {
 				this.events.push(new TravelEvent({
 					text: "You deliver a package to its destination, just outside of " + this.goingTo.name + ".",
 					money: player.packages[idx].bounty
 				}));
-				player.packages.splice(idx,1); //remove 1 element from player.packages, starting at element idx. neat!
                 
                 if(player.packages.length === 0 && map.packageCount === 0) {
                     this.game.state.start('win')
                 }
+			} else {
+				newpackages.push(player.packages[idx]);
 			}
 		}
+		player.packages = newpackages;
 
     }
     
