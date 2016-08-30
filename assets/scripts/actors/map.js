@@ -183,7 +183,7 @@ Map.CITY_NAMES = knuthShuffle([
 		"Cahaba",
 		"Cedric",
 		"Centerdale",
-		"Chandler Springs",
+		"Chandler",
 		"Choctaw Corner",
 		"Claiborne",
 		"Clarkesville",
@@ -214,7 +214,7 @@ Map.CITY_NAMES = knuthShuffle([
 		"Stanton",
 		"Tooktocaugee",
 		"Turkey Town",
-		"Valhermoso Springs",
+		"Valhermoso",
 		"Vienna",
 		"Waldo",
 		])
