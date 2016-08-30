@@ -34,14 +34,17 @@ class Travel {
 					money: player.packages[idx].bounty
 				}));
                 
-                if(player.packages.length === 0 && map.packageCount === 0) {
-                    this.game.state.start('win')
-                }
 			} else {
 				newpackages.push(player.packages[idx]);
 			}
 		}
 		player.packages = newpackages;
+        if(player.packages.length === 0 && map.packageCount === 0) {
+			console.log("WIN!");
+            this.game.state.start('win')
+        } else {
+			console.log("player=" + player.packages.length + ",map=" + map.packageCount);
+		}
 
     }
     
