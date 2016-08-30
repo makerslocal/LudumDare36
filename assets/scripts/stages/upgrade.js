@@ -76,8 +76,7 @@ class Upgrade {
             console.log(this.player)
             if(this.player.money >= 500) {
                 this.player.money -= 500
-                this.player.stats.health += 10
-                this.player.health += 10
+                this.player.health = this.player.stats.health
                 this.availableCash.text = 'You have ' + this.player.money + ' \uD83D\uDCB0'
             }
             console.log(this.player)
@@ -91,7 +90,7 @@ class Upgrade {
                 boundsAlignH: 'center',
                 boundsAlignV: 'middle' 
             })  
-        this.game.add.text(165, 460, '+10 HP', 
+        this.game.add.text(165, 460, 'Restore HP', 
             { 
                 font: 'Helvetica Neue, sans-serif',
                 fill: '#78410C', stroke: '#78410C',

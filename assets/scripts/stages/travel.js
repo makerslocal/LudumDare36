@@ -153,7 +153,7 @@ class Travel {
 			if ( Math.random() < 0.01*treachery ) {
 				res.push(new TravelEvent({
 					text: "\"Stick 'em up! This is a stick up!\"\n",
-					health: (this.player.stats.health * -0.1)-1,
+					health: (this.player.stats.health * -0.4),
 					money: (this.player.money * -0.81)-1
 				}));
 			}
@@ -162,7 +162,7 @@ class Travel {
 			if ( Math.random() < 0.02*treachery ) {
 				res.push(new TravelEvent({
 					text: "You were bitten by a snake!",
-					health: (this.player.stats.health * -0.1)-1
+					health: (this.player.stats.health * -0.1)
 				}));
 			}
 
@@ -170,7 +170,7 @@ class Travel {
 			if ( Math.random() < 0.04*treachery ) {
 				res.push(new TravelEvent({
 					text: "You tripped due to your jockey's negligence.",
-					health: (this.player.stats.health * -0.05)-1
+					health: (this.player.stats.health * -0.1)
 				}));
 			}
 
@@ -178,7 +178,7 @@ class Travel {
 			if ( Math.random() < 0.02 ) {
 				res.push(new TravelEvent({
 					text: "Your jockey clumsily dropped some money on the ground.",
-					money: (this.player.money * -0.05)-1
+					money: (this.player.money * -0.1)
 				}));
 			}
 
@@ -186,7 +186,7 @@ class Travel {
 			if ( Math.random() < 0.01*treachery ) {
 				res.push(new TravelEvent({
 					text: "You ran into a rock... but it wasn't a rock!",
-					health: (this.player.stats.health * -0.02)-1
+					health: -1
 				}));
 			}
 		}
