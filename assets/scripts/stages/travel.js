@@ -33,6 +33,10 @@ class Travel {
 					money: player.packages[idx].bounty
 				}));
 				player.packages.splice(idx,1); //remove 1 element from player.packages, starting at element idx. neat!
+                
+                if(player.packages.length === 0 && map.packageCount === 0) {
+                    this.game.state.start('win')
+                }
 			}
 		}
 
