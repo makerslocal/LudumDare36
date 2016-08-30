@@ -37,14 +37,16 @@ class City extends Phaser.Sprite {
         }, this);
 
         this.nameText = this.game.add.text(0, 0,
-                                           this.name,
+                                           this.name + '   \uD83D\uDCE6 ' + this.packages.length,
                                            { font: 'Amatic SC, sans-serif',
                                              fill: '#211c05', stroke: '#FFB707',
                                              fontSize: '30px', fontWeight: 'bold',
                                              boundsAlignH: 'center',
                                              boundsAlignV: 'middle' })
+        
         this.nameText.setTextBounds(this.x + this.width/2 - 100, this.y-30, 200, 50);
         this.nameText.setShadow(1, 1, 'rgba(0,0,0,0.5)', 2);
+        
         this.alpha = 0.4
         this.nameText.alpha = 0.4
     }
