@@ -40,18 +40,18 @@ class StatsMenu extends Phaser.Sprite {
         
         this.packages = this.game.add.group()
         
-        this.packages.text = this.game.add.text(60, 340, 'Packages', { font: 'Inconsolata, monospace', fill: '#333333', stroke: '#333333', fontSize: '30px' })
+        this.packages.text = this.game.add.text(60, 390, 'Packages', { font: 'Inconsolata, monospace', fill: '#333333', stroke: '#333333', fontSize: '30px' })
         this.packages.text.fixedToCamera = true
         
-        this.packages.value = this.game.add.text(190, 340, this.player.packages.length + '/' + this.player.stats.carryingCapacity, { font: 'Inconsolata, monospace', fill: '#333333', stroke: '#333333', fontSize: '30px' })
+        this.packages.value = this.game.add.text(190, 390, this.player.packages.length + '/' + this.player.stats.carryingCapacity, { font: 'Inconsolata, monospace', fill: '#333333', stroke: '#333333', fontSize: '30px' })
         this.packages.value.fixedToCamera = true
         
-        for(var p = 0; p < 7 && p < this.player.packages.length; p++) {
+        for(var p = 0; p < 5 && p < this.player.packages.length; p++) {
             var pkg = this.player.packages[p]
             
-            this.game.add.text(60, 400 + (20 * p), pkg.destination, { font: 'Inconsolata, monospace', fill: '#333333', stroke: '#333333', fontSize: '20px' }).fixedToCamera = true
+            this.game.add.text(60, 420 + (20 * p), pkg.destination, { font: 'Inconsolata, monospace', fill: '#333333', stroke: '#333333', fontSize: '20px' }).fixedToCamera = true
             
-            this.game.add.text(220, 400 + (20 * p), pkg.bounty, { font: 'Inconsolata, monospace', fill: '#333333', stroke: '#333333', fontSize: '20px' }).fixedToCamera = true
+            this.game.add.text(220, 420 + (20 * p), pkg.bounty, { font: 'Inconsolata, monospace', fill: '#333333', stroke: '#333333', fontSize: '20px' }).fixedToCamera = true
             
             if(p === 6) {
                 this.game.add.text(60, 
