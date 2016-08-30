@@ -42,9 +42,10 @@ class Upgrade {
         this.bag.inputEnabled = true
         this.bag.input.useHandCursor = true
         this.bag.events.onInputUp.add(function (e) {
-            if(this.player.money > 300) {
+            if(this.player.money >= 300) {
                 this.player.money -= 300
                 this.player.stats.carryingCapacity += 1
+                this.availableCash.text = 'You have ' + this.player.money + ' \uD83D\uDCB0'
             }
         }, this)
         
@@ -73,10 +74,11 @@ class Upgrade {
         this.saddle.input.useHandCursor = true
         this.saddle.events.onInputUp.add(function (e) {
             console.log(this.player)
-            if(this.player.money > 500) {
+            if(this.player.money >= 500) {
                 this.player.money -= 500
                 this.player.stats.health += 10
                 this.player.health += 10
+                this.availableCash.text = 'You have ' + this.player.money + ' \uD83D\uDCB0'
             }
             console.log(this.player)
         }, this)
