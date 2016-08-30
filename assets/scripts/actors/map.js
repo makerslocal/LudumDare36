@@ -61,7 +61,8 @@ class Map extends graphlib.Graph {
 		}
 		return {
 			rootNodeName: this.rootNode.name,
-			nodes: a
+			nodes: a,
+			packageCount: this.getPackageCount()
 		};
 	}
 
@@ -72,6 +73,14 @@ class Map extends graphlib.Graph {
 		},this);
 		return nodes;
     }
+	getPackageCount() {
+		var ct = 0;
+		var nodes = this.getCities();
+		for ( var idx in nodes ) {
+			ct += nodes[idx].packages.length;
+		}
+		return ct;
+	}
     getClosestCity(target, orphanOnly) {
 		var cities = this.getCities();
 		var closest = cities[0];
