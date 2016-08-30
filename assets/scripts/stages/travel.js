@@ -144,7 +144,7 @@ class Travel {
 			//bandits
 			if ( Math.random() < 0.01*treachery ) {
 				res.push(new TravelEvent({
-					text: "\"Stick 'em up! This is a stick up!\"",
+					text: "\"Stick 'em up! This is a stick up!\"\n",
 					health: this.player.stats.health * -0.1,
 					money: this.player.money * -0.81
 				}));
