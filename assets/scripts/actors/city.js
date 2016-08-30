@@ -17,13 +17,13 @@ class City extends Phaser.Sprite {
 			var asdf = Math.random();
 			var nodes = knuthShuffle(map.nodes().slice(0));
 			if ( nodes.length>0 && asdf < 0.25 ) {
-				this.packages.push(new Package(nodes.pop(), Math.floor(Math.random()*1000)));
+				this.packages.push(new Package(nodes.pop(), Math.floor(Math.random()*400) + 100));
 			}
 			if ( nodes.length>0 && asdf < 0.75 ) {
-				this.packages.push(new Package(nodes.pop(), Math.floor(Math.random()*500)));
+				this.packages.push(new Package(nodes.pop(), Math.floor(Math.random()*250) + 50));
 			}
 			if ( nodes.length>0 ) {
-				this.packages.push(new Package(nodes.pop(), Math.floor(Math.random()*300)));
+				this.packages.push(new Package(nodes.pop(), Math.floor(Math.random()*70) + 30));
 			}
 		} else {
 			this.packages = packages;
