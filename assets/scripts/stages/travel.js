@@ -81,6 +81,10 @@ class Travel {
         this.intervalIndex = 1 // 1-indexed
         
         this.game.input.onTap.add(function (e) {
+			if(this.player.health <= 0) {
+				this.game.state.start('game-over');
+			}
+
             if(this.horse.x < this.interval * this.intervalIndex) return
 
             this.horse.animations.play('running', 30, true);
@@ -116,8 +120,6 @@ class Travel {
                     if(typeof event.effects.money !== 'undefined')
                         this.player.money += event.effects.money
 
-                    if(this.player.health <= 0)
-                        this.game.state.start('game-over')
                 }
                 else if(this.intervalIndex - 1 === this.events.length)
                     this.infoText.text = 'You stop in ' + this.goingTo.name  + ' to rest and restock on supplies.'
