@@ -84,7 +84,8 @@ class Travel {
         this.game.input.onTap.add(function (e) {
             if(this.horse.x < this.interval * this.intervalIndex) return
 
-            this.horse.animations.play('running', 30, true)
+            this.horse.animations.play('running', 30, true);
+			this.infoText.text = '';
             this.intervalIndex++
         }, this);
         
