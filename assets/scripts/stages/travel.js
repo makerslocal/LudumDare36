@@ -80,14 +80,6 @@ class Travel {
         this.interval = Math.floor(this.game.camera.width / (this.events.length + 1))
         this.intervalIndex = 1 // 1-indexed
         
-        this.game.input.keyboard.onUpCallback = function (e) {
-            if(this.horse.x < this.interval * this.intervalIndex) return
-            
-            if(e.keyCode === Phaser.Key.SPACEBAR) {
-                this.intervalIndex++
-                this.horse.animations.play('running', 30, true)
-            }
-        }.bind(this)
         this.game.input.onTap.add(function (e) {
             if(this.horse.x < this.interval * this.intervalIndex) return
 
