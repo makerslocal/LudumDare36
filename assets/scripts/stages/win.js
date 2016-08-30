@@ -50,4 +50,4 @@ class Win {
     }
 }
 
-GameOver.Win = 100
+Win.FADE_TIMEOUT = 100
