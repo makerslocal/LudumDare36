@@ -29,11 +29,11 @@ class Upgrade {
         this.horse.animations.add('running')
         this.horse.animations.play('running', 20, true)
         
-        this.jockeySprite = this.game.add.sprite(240, 240, 'jockey')
-        this.jockeySprite.scale.setTo(3, 3)
-        this.jockeySprite.smoothed = false
-        this.jockeySprite.animations.add('running')
-        this.jockeySprite.animations.play('running', 20, true)
+//        this.jockeySprite = this.game.add.sprite(240, 240, 'jockey')
+//        this.jockeySprite.scale.setTo(3, 3)
+//        this.jockeySprite.smoothed = false
+//        this.jockeySprite.animations.add('running')
+//        this.jockeySprite.animations.play('running', 20, true)
         
         this.bag = this.game.add.sprite(160, 180, 'upgrade-bag')
         this.bag.scale.setTo(4, 4)
@@ -133,6 +133,15 @@ class Upgrade {
         this.sign.events.onInputUp.add(function (e) {
             this.game.state.start('overworld', true, false, this.map, this.player)
         }, this)
+        
+        this.availableCash = this.game.add.text(450, 200, 'You have ' + this.player.money + ' \uD83D\uDCB0', 
+            { 
+                font: 'Helvetica Neue, sans-serif',
+                fill: '#78410C', stroke: '#78410C',
+                fontSize: '20px', fontWeight: 'bold',
+                boundsAlignH: 'center',
+                boundsAlignV: 'middle' 
+            })
     }
     update () {
         
